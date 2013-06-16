@@ -4,6 +4,12 @@
  */
 package provisionamento.view;
 
+import MyExceptions.CarregaDadosException;
+import provisionamento.DAO.Dao;
+import provisionamento.DaoArquivo.DaoArquivoGrupoComunitario;
+import provisionamento.model.GrupoComunitario;
+import provisionamento.model.Usuario;
+
 /**
  *
  * @author Game Mania
@@ -14,7 +20,23 @@ public class FrameGrupo extends javax.swing.JFrame {
      * Creates new form FrameGrupo
      */
     public FrameGrupo() {
-        initComponents();
+        /*try {
+
+            Dao<GrupoComunitario> dao =
+                    DaoArquivoGrupoComunitario.getInstancia("D:\\Gustavo\\Documents\\ARQUIVOS");
+
+            initComponents();
+            GrupoComunitario grupo = new GrupoComunitario();
+            Usuario criador = new Usuario();
+            criador.setNome("Gustavo S.");
+            criador.setEmail("gustavo.sabel.gs@gmail.com");
+            criador.setSalario(99999);
+            criador.setSenha("senha");
+            grupo.setCriador(criador);
+
+        } catch (CarregaDadosException ex) {
+            System.out.println(ex.getMessage());
+        }*/
     }
 
     /**
@@ -94,11 +116,12 @@ public class FrameGrupo extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
                 new FrameGrupo().setVisible(true);
             }
         });
+
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox1;
