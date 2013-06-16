@@ -13,6 +13,11 @@ public abstract class Grupo {
     private String descricao;
     private int prazoValidade;
     private int quantidade;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
 
     public Categoria getCategoria() {
         return categoria;
@@ -44,5 +49,10 @@ public abstract class Grupo {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+    
+    public Grupo()
+    {
+        this.id = -1;
     }
 }
