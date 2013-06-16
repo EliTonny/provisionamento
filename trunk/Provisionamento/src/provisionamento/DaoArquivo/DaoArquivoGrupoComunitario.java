@@ -3,8 +3,6 @@ package provisionamento.DaoArquivo;
 import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
 import MyExceptions.DeletaDadosException;
-import java.lang.reflect.Field;
-import provisionamento.DAO.Dao;
 import provisionamento.model.Grupo;
 import provisionamento.model.GrupoComunitario;
 
@@ -23,7 +21,6 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
         return instancia;
     }
 
-    @Override
     public void grava(GrupoComunitario grupo) throws DaoException {
         try {
             if (grupo.getId() == -1) {
@@ -37,7 +34,6 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
 
     }
 
-    @Override
     public GrupoComunitario busca(String descricao) {
         for (GrupoComunitario val : this.dados.values()) {
             if (val.getDescricao().equals(descricao)) {
@@ -47,12 +43,10 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
         return null;
     }
 
-    @Override
     public GrupoComunitario busca(int id) {
         return this.dados.get(id);
     }
 
-    @Override
     public void deleta(GrupoComunitario grupo) throws DaoException {
         if (grupo.getId() == -1) {
             throw new DeletaDadosException("Grupo não cadastrado.");
