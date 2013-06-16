@@ -5,7 +5,6 @@
 package provisionamento.view;
 
 import MyExceptions.CarregaDadosException;
-import provisionamento.DAO.Dao;
 import provisionamento.DaoArquivo.DaoArquivoGrupoComunitario;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Usuario;
