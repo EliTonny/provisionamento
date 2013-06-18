@@ -1,20 +1,13 @@
 
 package provisionamento.model;
 
-/**
- *
- * @author Eli T. de Souza
- */
-public class Usuario {
-    private int id;
+import provisionamento.DaoArquivo.ModeloBase;
+
+public class Usuario  extends ModeloBase{
     private String nome;
     private String senha;
     private String email;
     private double salario;
-
-    public int getId() {
-        return id;
-    }
     
     public String getEmail() {
         return email;

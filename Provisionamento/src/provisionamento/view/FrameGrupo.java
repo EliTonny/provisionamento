@@ -1,41 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package provisionamento.view;
 
-import MyExceptions.CarregaDadosException;
-import provisionamento.DaoArquivo.DaoArquivoGrupoComunitario;
-import provisionamento.model.GrupoComunitario;
-import provisionamento.model.Usuario;
-
-/**
- *
- * @author Game Mania
- */
 public class FrameGrupo extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameGrupo
      */
     public FrameGrupo() {
-        /*try {
-
-            Dao<GrupoComunitario> dao =
-                    DaoArquivoGrupoComunitario.getInstancia("D:\\Gustavo\\Documents\\ARQUIVOS");
-
-            initComponents();
-            GrupoComunitario grupo = new GrupoComunitario();
-            Usuario criador = new Usuario();
-            criador.setNome("Gustavo S.");
-            criador.setEmail("gustavo.sabel.gs@gmail.com");
-            criador.setSalario(99999);
-            criador.setSenha("senha");
-            grupo.setCriador(criador);
-
-        } catch (CarregaDadosException ex) {
-            System.out.println(ex.getMessage());
-        }*/
+        initComponents();
     }
 
     /**

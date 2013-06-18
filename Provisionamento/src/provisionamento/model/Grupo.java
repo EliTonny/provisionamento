@@ -1,23 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package provisionamento.model;
 
-/**
- *
- * @author Eli T. de Souza
- */
-public abstract class Grupo {
+import provisionamento.DaoArquivo.ModeloBase;
+
+public abstract class Grupo  extends ModeloBase{
     private Categoria categoria;
     private String descricao;
     private int prazoValidade;
     private int quantidade;
-    private int id;
-
-    public int getId() {
-        return id;
-    }
 
     public Categoria getCategoria() {
         return categoria;
