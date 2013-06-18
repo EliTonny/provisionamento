@@ -1,23 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package provisionamento.model;
 
 import java.util.HashSet;
 import java.util.Set;
 import provisionamento.fila.Fila;
 
-/**
- *
- * @author Eli T. de Souza
- */
 public class GrupoComunitario extends Grupo{
     
     private Usuario criador;
     private Set<Participante> participantes;
     private Fila fila;
-    
     
     public GrupoComunitario(){
         participantes = new HashSet<>();

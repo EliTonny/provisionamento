@@ -2,6 +2,7 @@ package provisionamento.DaoArquivo;
 
 import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
+import MyExceptions.DeletaDadosException;
 import MyExceptions.GravaDadosException;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,13 +11,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import provisionamento.model.Grupo;
 
-public abstract class DaoArquivo<T> {
+public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
 
     protected HashMap<Integer, T> dados;
     protected int proximoId;
@@ -24,6 +23,7 @@ public abstract class DaoArquivo<T> {
 
     public DaoArquivo(String caminho) throws CarregaDadosException {
         this.arquivo = new File(caminho);
+        dados = new HashMap<>();
         this.Carrega();
     }
 
@@ -33,8 +33,7 @@ public abstract class DaoArquivo<T> {
                 FileInputStream fileInputStream = new FileInputStream(arquivo);
                 try {
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream); //abre
-                    ObjectInputStream objetos;
-                    objetos = new ObjectInputStream(bufferedInputStream);
+                    ObjectInputStream objetos = new ObjectInputStream(bufferedInputStream);
                     DaoArquivo<T> aux;
                     aux = (DaoArquivo<T>) objetos.readObject();
 
@@ -56,7 +55,8 @@ public abstract class DaoArquivo<T> {
             try {
                 BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
                 ObjectOutputStream objectOutput = new ObjectOutputStream(bufferedOutput);
-                objectOutput.writeObject(dados);
+                objectOutput.writeObject(this);
+                objectOutput.flush();
             } finally {
                 fileOutput.close();
             }
@@ -66,17 +66,24 @@ public abstract class DaoArquivo<T> {
         }
     }
 
-    protected Field procuraCampoId(Class classe) {
-        if (classe == null) {
-            return null;
-        }
-        Field[] fields = classe.getFields();
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i].getName().equals("id")) {
-                return fields[i];
+    protected Field procuraCampoId(Class classe) throws DaoException {
+        try {
+
+            Class aux = classe.getSuperclass();
+            while(aux != null)
+            {
+                if(aux.equals(ModeloBase.class))
+                    break;
+                aux = aux.getSuperclass();
             }
+            if(aux == null)
+                return null;
+            
+            return aux.getDeclaredField("id");
+
+        } catch (NoSuchFieldException | SecurityException ex) {
+            throw new DaoException(ex);
         }
-        return procuraCampoId(classe.getSuperclass());
     }
 
     protected void insereId(T object) throws DaoException {
@@ -89,5 +96,31 @@ public abstract class DaoArquivo<T> {
         } catch (Exception ex) {
             throw new DaoException("Erro ao acessar id de " + object.getClass().getSimpleName(), ex);
         }
+    }
+    
+    public void grava(T object) throws DaoException {
+        try {
+            if (object.getId() == -1) {
+                this.insereId(object);
+            }
+            this.dados.put(object.getId(), object);
+            this.Persiste();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+    
+    public void deleta(T object) throws DaoException {
+        if (object.getId() == -1) {
+            throw new DeletaDadosException("Grupo não cadastrado.");
+        }
+        T objectRemovido = this.dados.remove(object.getId());
+        if (objectRemovido == null) {
+            throw new DeletaDadosException("Grupo não encontrado.");
+        }
+    }
+    
+   public T busca(int id) {
+        return this.dados.get(id);
     }
 }

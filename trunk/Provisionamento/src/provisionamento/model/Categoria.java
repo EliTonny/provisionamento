@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package provisionamento.model;
 
-/**
- *
- * @author Eli T. de Souza
- */
-public class Categoria {
+import provisionamento.DaoArquivo.ModeloBase;
+
+public class Categoria extends ModeloBase{
     private String descricao;
 
     public String getDescricao() {
