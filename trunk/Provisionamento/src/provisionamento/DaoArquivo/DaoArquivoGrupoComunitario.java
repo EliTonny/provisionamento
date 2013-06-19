@@ -3,6 +3,8 @@ package provisionamento.DaoArquivo;
 import Dao.Dao;
 import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
+import java.util.ArrayList;
+import java.util.List;
 import provisionamento.model.Grupo;
 import provisionamento.model.GrupoComunitario;
 
@@ -26,7 +28,9 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
     }
     
     public GrupoComunitario busca(int id) {
-        return super.busca(id);
+        GrupoComunitario g = super.busca(id);
+        
+        return g;
     }
     
     public void deleta(GrupoComunitario grupo) throws DaoException {
@@ -40,5 +44,9 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
             }
         }
         return null;
+    }
+
+    public ArrayList<GrupoComunitario> busca() {
+        return super.busca();
     }
 }

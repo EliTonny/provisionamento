@@ -1,5 +1,6 @@
 package provisionamento.DaoArquivo;
 
+import Dao.Dao;
 import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
 import MyExceptions.DeletaDadosException;
@@ -9,10 +10,12 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
@@ -20,7 +23,7 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
     protected HashMap<Integer, T> dados;
     protected int proximoId;
     private File arquivo;
-
+    
     public DaoArquivo(String caminho) throws CarregaDadosException {
         this.arquivo = new File(caminho);
         dados = new HashMap<>();
@@ -30,8 +33,7 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
     private void Carrega() throws CarregaDadosException {
         try {
             if (arquivo.exists()) {
-                FileInputStream fileInputStream = new FileInputStream(arquivo);
-                try {
+                try (FileInputStream fileInputStream = new FileInputStream(arquivo)) {
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream); //abre
                     ObjectInputStream objetos = new ObjectInputStream(bufferedInputStream);
                     DaoArquivo<T> aux;
@@ -39,15 +41,48 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
 
                     this.dados = aux.dados;
                     this.proximoId = aux.proximoId;
-                } finally {
-                    fileInputStream.close();
                 }
             }
 
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             throw new CarregaDadosException(ex);
         }
     }
+    
+    private void AtualizaReferencias()
+    {
+        if(this.dados.isEmpty())
+            return;
+        
+        Class classe = this.dados.values().iterator().next().getClass();
+        Field[] fields = classe.getDeclaredFields();
+        for(int i = 0; i< fields.length; i++)
+        {
+            if(fields[i].getGenericType().getClass().equals(ModeloBase.class))
+            {
+                
+            }
+        }
+    }
+    
+   /* private void AtualizaReferencias(Class classe)
+    {
+        if(classe == null)
+            return;
+        
+        Dao.class.getConstructor(parameterTypes)
+        
+        Dao<?> dao =  
+        
+        Field[] fields = classe.getDeclaredFields();
+        for(int i = 0; i< fields.length; i++)
+        {
+            if(fields[i].getGenericType().getClass().equals(ModeloBase.class))
+            {
+                
+            }
+        }
+    }*/
 
     public void Persiste() throws DaoException {
         try {
@@ -66,6 +101,36 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
         }
     }
 
+    public void grava(T object) throws DaoException {
+        try {
+            /*if (object.getId() == -1) {
+                this.insereId(object);
+            }*/
+            this.dados.put(object.getId(), object);
+            this.Persiste();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+    
+    public void deleta(T object) throws DaoException {
+        /*if (object.getId() == -1) {
+            throw new DeletaDadosException("Grupo não cadastrado.");
+        }*/
+        T objectRemovido = this.dados.remove(object.getId());
+        if (objectRemovido == null) {
+            throw new DeletaDadosException(object.getClass().getSimpleName() + " não encontrado.");
+        }
+    }
+    
+    public T busca(int id) {
+        return this.dados.get(id);
+    }
+    public ArrayList<T> busca() {
+        return new ArrayList<>(this.dados.values());
+    }
+    
+    /*
     protected Field procuraCampoId(Class classe) throws DaoException {
         try {
 
@@ -97,30 +162,5 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable{
             throw new DaoException("Erro ao acessar id de " + object.getClass().getSimpleName(), ex);
         }
     }
-    
-    public void grava(T object) throws DaoException {
-        try {
-            if (object.getId() == -1) {
-                this.insereId(object);
-            }
-            this.dados.put(object.getId(), object);
-            this.Persiste();
-        } catch (Exception ex) {
-            throw new DaoException(ex);
-        }
-    }
-    
-    public void deleta(T object) throws DaoException {
-        if (object.getId() == -1) {
-            throw new DeletaDadosException("Grupo não cadastrado.");
-        }
-        T objectRemovido = this.dados.remove(object.getId());
-        if (objectRemovido == null) {
-            throw new DeletaDadosException("Grupo não encontrado.");
-        }
-    }
-    
-   public T busca(int id) {
-        return this.dados.get(id);
-    }
+    */
 }

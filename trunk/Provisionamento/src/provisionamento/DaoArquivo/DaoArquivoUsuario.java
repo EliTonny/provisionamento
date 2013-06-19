@@ -3,7 +3,8 @@ package provisionamento.DaoArquivo;
 import Dao.Dao;
 import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
-import provisionamento.model.Grupo;
+import java.util.ArrayList;
+import java.util.List;
 import provisionamento.model.Usuario;
 
 public class DaoArquivoUsuario extends DaoArquivo<Usuario> implements Dao<Usuario> {
@@ -40,5 +41,9 @@ public class DaoArquivoUsuario extends DaoArquivo<Usuario> implements Dao<Usuari
             }
         }
         return null;
+    }
+
+    public ArrayList<Usuario> busca() {
+        return super.busca();
     }
 }
