@@ -17,11 +17,11 @@ public class Testes {
     public static void main(String[] args) {
         try {          
 
-             /*Dao<GrupoComunitario> daoG =
+             Dao<GrupoComunitario> daoG =
                      DaoArquivoGrupoComunitario.getInstancia("D:\\Gustavo\\Documents\\ARQUIVOS");
              Dao<Usuario> daoU = 
                      DaoArquivoUsuario.getInstancia("D:\\Gustavo\\Documents\\ARQUIVOS");
-             
+             /*
              GrupoComunitario g = daoG.busca(0);
              Usuario u = daoU.busca(0);
              u.hashCode();
@@ -34,10 +34,10 @@ public class Testes {
             
             JOptionPane.showMessageDialog(null, teste);*/
             
-            
+            //daoG.busca()
             
              
-             /*GrupoComunitario grupo = new GrupoComunitario();
+             GrupoComunitario grupo = new GrupoComunitario();
              Usuario criador = new Usuario();
              criador.setNome("Gustavo S.");
              criador.setEmail("gustavo.sabel.gs@gmail.com");
@@ -46,17 +46,8 @@ public class Testes {
              grupo.setCriador(criador);
 
              daoG.grava(grupo);
-             daoU.grava(criador);*/
+             daoU.grava(criador);
 
-
-            /*Dao<Usuario> dao = DaoArquivoUsuario.getInstancia("D:\\Gustavo\\Documents\\ARQUIVOS");
-            Usuario usu;
-            for (int i = 0; i < 5000; i++) {
-                usu = new Usuario();
-                usu.setNome(Main.geraString());
-                dao.grava(usu);
-            }*/
-            
             
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
