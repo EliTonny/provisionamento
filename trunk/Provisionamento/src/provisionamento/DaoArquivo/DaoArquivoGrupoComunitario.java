@@ -1,42 +1,26 @@
 package provisionamento.DaoArquivo;
 
 import Dao.Dao;
-import MyExceptions.CarregaDadosException;
 import MyExceptions.DaoException;
-import java.util.ArrayList;
-import java.util.List;
-import provisionamento.model.Grupo;
 import provisionamento.model.GrupoComunitario;
+import provisionamento.model.Usuario;
 
 public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> implements Dao<GrupoComunitario> {
 
     private static DaoArquivoGrupoComunitario instancia;
 
-    private DaoArquivoGrupoComunitario(String caminho) throws CarregaDadosException {
-        super(caminho + "\\" + Grupo.class.getSimpleName());
+    private DaoArquivoGrupoComunitario() throws DaoException {
+        super(GrupoComunitario.class.getSimpleName());
     }
 
-    public static DaoArquivoGrupoComunitario getInstancia(String caminho) throws CarregaDadosException {
+    public static DaoArquivoGrupoComunitario getInstancia() throws DaoException {
         if (instancia == null) {
-            instancia = new DaoArquivoGrupoComunitario(caminho);
+            instancia = new DaoArquivoGrupoComunitario();
         }
         return instancia;
     }
 
-    public void grava(GrupoComunitario grupo) throws DaoException {
-        super.grava(grupo);
-    }
-    
-    public GrupoComunitario busca(int id) {
-        GrupoComunitario g = super.busca(id);
-        
-        return g;
-    }
-    
-    public void deleta(GrupoComunitario grupo) throws DaoException {
-        super.deleta(grupo);
-    }
-
+    @Override
     public GrupoComunitario busca(String descricao) {
         for (GrupoComunitario val : this.dados.values()) {
             if (val.getDescricao().equals(descricao)) {
@@ -46,7 +30,17 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
         return null;
     }
 
-    public ArrayList<GrupoComunitario> busca() {
-        return super.busca();
+    @Override
+    protected void AtualizaReferencias() throws DaoException {
+        try {
+            Usuario u;
+            Dao<Usuario> dao = DaoArquivoUsuario.getInstancia();
+            for (GrupoComunitario g : this.dados.values()) {
+                u = dao.busca(g.getCriador().getId());
+                g.setCriador(u);
+            }
+        } catch (DaoException ex) {
+            throw new DaoException("Erro ao atualizar as referencias.", ex);
+        }
     }
 }

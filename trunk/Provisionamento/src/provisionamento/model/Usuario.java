@@ -1,14 +1,14 @@
-
 package provisionamento.model;
 
 import provisionamento.DaoArquivo.ModeloBase;
 
-public class Usuario  extends ModeloBase{
+public class Usuario extends ModeloBase {
+
     private String nome;
     private String senha;
     private String email;
     private double salario;
-    
+
     public String getEmail() {
         return email;
     }
@@ -40,20 +40,21 @@ public class Usuario  extends ModeloBase{
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         Usuario usuario;
-        if(o instanceof Usuario){
+        if (o instanceof Usuario) {
             usuario = (Usuario) o;
-            if(this.getId() == usuario.getId())
+            if (this.getId() == usuario.getId()) {
                 return true;
+            }
         }
         return false;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.getNome();
     }
 }

@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 public abstract class ModeloBase implements Serializable {
 
+    protected int id;
+
     public ModeloBase() {
         id = super.hashCode();
     }
-    protected int id;
 
     public int getId() {
         return this.id;
