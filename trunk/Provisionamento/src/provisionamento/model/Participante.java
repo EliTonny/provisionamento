@@ -22,7 +22,7 @@ public class Participante extends ModeloBase{
         this.usuario = usuario;
     }
     
-    @Override
+    /*@Override
     public boolean equals(Object o){
         Participante participante;
         if(o instanceof Participante){
@@ -31,7 +31,7 @@ public class Participante extends ModeloBase{
                 return true;
         }
         return false;
-    }
+    }*/
     
     @Override
     public String toString(){

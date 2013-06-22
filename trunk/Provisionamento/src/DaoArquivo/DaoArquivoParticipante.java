@@ -2,6 +2,7 @@ package DaoArquivo;
 
 import Sistema.Dao;
 import MyExceptions.DaoException;
+import MyExceptions.GravaDadosException;
 import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
 
@@ -18,6 +19,14 @@ public class DaoArquivoParticipante extends DaoArquivo<Participante> implements 
             instancia = new DaoArquivoParticipante();
         }
         return instancia;
+    }
+
+    @Override
+    public void grava(Participante participante) throws GravaDadosException {
+        if (!estaGravado(participante.getUsuario())) {
+            throw new GravaDadosException("Tentativa de gravar um Grupo Comunitário que possui referência a outros objetos que não estão gravados");
+        }
+        super.grava(participante);
     }
 
     @Override

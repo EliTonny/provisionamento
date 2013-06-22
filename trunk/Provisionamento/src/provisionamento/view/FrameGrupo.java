@@ -17,7 +17,7 @@ public class FrameGrupo extends javax.swing.JFrame {
     public FrameGrupo() {
         initComponents();
         
-         List<Categoria> categorias = new ArrayList<Categoria>();    
+        List<Categoria> categorias = new ArrayList<Categoria>();
         
         try {
             Dao<Categoria> dao = Factoring.getDaoCategoria();
