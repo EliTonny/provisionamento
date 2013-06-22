@@ -5,6 +5,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
+import Sistema.AvisaCompradores;
 import Sistema.Dao;
 import Sistema.Factoring;
 import Sistema.UsuarioLogado;
@@ -126,6 +127,7 @@ public class FrameLogin extends javax.swing.JFrame {
             if(usuario != null){
                 if(Arrays.equals(usuario.getSenha().toCharArray(),tfSenha.getPassword())){
                     UsuarioLogado.setUsuarioLogado(usuario);
+                    AvisaCompradores.avisar();
                     framePri = new FramePrincipal();
                     framePri.setVisible(true);
                 } else{
