@@ -18,7 +18,7 @@ public class Testes {
 
             Usuario u;
             GrupoComunitario g;
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 100; i++) {
                 u = new Usuario();
                 daoU.grava(u);
                 g = new GrupoComunitario();

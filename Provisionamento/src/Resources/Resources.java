@@ -1,5 +1,5 @@
 package Resources;
 
 public final class Resources {
-    public static final String CAMINHO_ARQUIVOS = "D:\\teste";
+    public static String CAMINHO_ARQUIVOS2 = "D:\\teste";
 }
