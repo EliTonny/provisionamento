@@ -1,12 +1,14 @@
 package provisionamento.model;
 
 import DaoArquivo.ModeloBase;
+import java.util.Date;
 
 public abstract class Grupo  extends ModeloBase{
     private Categoria categoria;
     private String descricao;
-    private int prazoValidade;
+    private Date prazoValidade;
     private int quantidade;
+    private int qtd_dias_notificacao;
 
     public Categoria getCategoria() {
         return categoria;
@@ -24,11 +26,11 @@ public abstract class Grupo  extends ModeloBase{
         this.descricao = descricao;
     }
 
-    public int getPrazoValidade() {
+    public Date getPrazoValidade() {
         return prazoValidade;
     }
 
-    public void setPrazoValidade(int prazoValidade) {
+    public void setPrazoValidade(Date prazoValidade) {
         this.prazoValidade = prazoValidade;
     }
 
@@ -43,5 +45,13 @@ public abstract class Grupo  extends ModeloBase{
     public Grupo()
     {
         this.id = -1;
+    }
+
+    public int getQtd_dias_notificacao() {
+        return qtd_dias_notificacao;
+    }
+
+    public void setQtd_dias_notificacao(int qtd_dias_notificacao) {
+        this.qtd_dias_notificacao = qtd_dias_notificacao;
     }
 }
