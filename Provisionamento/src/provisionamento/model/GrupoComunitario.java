@@ -1,34 +1,33 @@
 package provisionamento.model;
 
-import java.util.HashSet;
-import java.util.Set;
-import provisionamento.fila.Fila;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GrupoComunitario extends Grupo{
     
     private Usuario criador;
-    private Set<Participante> participantes;
-    private Fila fila;
+    private List<Participante> participantes;
+    private int comprador;
     
     public GrupoComunitario(){
-        participantes = new HashSet<>();
+        participantes = new ArrayList<>();
     }
 
     public Usuario getCriador() {
         return criador;
-    }
+    }   
 
     public void setCriador(Usuario criador) {
         this.criador = criador;
     }
     
     public void addParticipante(Participante participante){
-        if(this.participantes.add(participante)){
-          this.fila.insere(participante.getUsuario());  
-        }
+        //Usando arrayList para controlar a fila com o indice comprador
+        if(!participantes.contains(participante))
+            participantes.add(participante);
     }
     
     public void removeParticipante(Participante participante){
-        this.participantes.remove(participante);
+        participantes.remove(participante);
     }
 }
