@@ -30,4 +30,16 @@ public class GrupoComunitario extends Grupo{
     public void removeParticipante(Participante participante){
         participantes.remove(participante);
     }
+    
+    public void addComprador(){
+        this.comprador++;
+    }
+    
+    public void setComprador(int comprador){
+        this.comprador = comprador;
+    }
+    
+    public int getComprador(){
+        return this.comprador;
+    }
 }
