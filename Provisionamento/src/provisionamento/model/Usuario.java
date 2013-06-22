@@ -56,6 +56,10 @@ public class Usuario extends ModeloBase {
     public void removeMensagem(Mensagem mensagem){
         this.mensagens.remove(mensagem);
     }
+    
+    public List<Mensagem> getMensagens(){
+        return this.mensagens;
+    }
 
     @Override
     public boolean equals(Object o) {

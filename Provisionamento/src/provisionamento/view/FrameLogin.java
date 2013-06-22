@@ -7,9 +7,11 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
+import Sistema.UsuarioLogado;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import provisionamento.model.Usuario;
 
@@ -123,6 +125,7 @@ public class FrameLogin extends javax.swing.JFrame {
             Usuario usuario = dao.busca(tfUsuario.getText());
             if(usuario != null){
                 if(Arrays.equals(usuario.getSenha().toCharArray(),tfSenha.getPassword())){
+                    UsuarioLogado.setUsuarioLogado(usuario);
                     framePri = new FramePrincipal();
                     framePri.setVisible(true);
                 } else{
