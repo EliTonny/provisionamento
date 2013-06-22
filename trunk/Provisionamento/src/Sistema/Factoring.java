@@ -12,6 +12,10 @@ import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
 
 public class Factoring {
+    
+    private Factoring(){
+        
+    }
 
     public static Dao<Usuario> getDaoUsuario() throws DaoException {
         return DaoArquivoUsuario.getInstancia();
