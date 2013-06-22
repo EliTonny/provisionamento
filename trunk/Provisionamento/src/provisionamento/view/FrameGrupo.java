@@ -181,6 +181,8 @@ public class FrameGrupo extends javax.swing.JFrame {
                 new FrameGrupo().setVisible(true);
             }
         });
+        
+        
 
 
     }
