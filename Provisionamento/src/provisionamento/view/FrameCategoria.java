@@ -5,9 +5,8 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
+import Sistema.Dao;
 import Sistema.Factoring;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import provisionamento.model.Categoria;
 
 /**
@@ -92,18 +91,25 @@ public class FrameCategoria extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        /*
+         Categoria categoria = new Categoria();
+         categoria.setDescricao(jTextField1.getText());
         
-        Categoria categoria = new Categoria();
-        categoria.setDescricao(jTextField1.getText());
-        
-        Factoring factory = new Factoring();
+         Factoring factory = new Factoring();
+         try {
+         factory.getDaoCategoria().grava(categoria);
+         } catch (DaoException ex) {
+         ex.getMessage();
+         }*/
         try {
-            factory.getDaoCategoria().grava(categoria);
+            Categoria categoria = new Categoria();
+            categoria.setDescricao(jTextField1.getText());
+            Factoring factory = new Factoring();
+            Dao<Categoria> dao = factory.getDaoCategoria();
+            dao.grava(categoria);
         } catch (DaoException ex) {
-            ex.getMessage();
+            System.out.println(ex.getMessage());
         }
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
