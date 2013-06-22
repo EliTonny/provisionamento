@@ -10,4 +10,5 @@ public interface Dao<T> {
     T busca(String nome) throws DaoException;
     T busca(int id) throws DaoException;
     List<T> busca() throws DaoException;
+    void abre() throws DaoException;
 }
