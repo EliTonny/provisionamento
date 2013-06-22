@@ -4,6 +4,11 @@
  */
 package provisionamento.view;
 
+import Sistema.UsuarioLogado;
+import java.util.Iterator;
+import java.util.List;
+import provisionamento.model.Mensagem;
+
 /**
  *
  * @author Lucas
@@ -15,6 +20,16 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
+        
+        List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
+        Iterator it = mensagens.iterator();
+        Mensagem mensagem;
+        while(it.hasNext()){
+            mensagem = (Mensagem) it.next();
+            taNotificacoes.setText(taNotificacoes.getText() + 
+                                   "\n" + mensagem.getMensagem());
+        }
+        
     }
 
     /**
@@ -30,7 +45,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taNotificacoes = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
@@ -50,9 +65,9 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel2.setText("Suas Notificacões");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        taNotificacoes.setColumns(20);
+        taNotificacoes.setRows(5);
+        jScrollPane1.setViewportView(taNotificacoes);
 
         jLabel3.setText("Bom vê-lo novamente por aqui, (UserName).");
 
@@ -199,6 +214,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea taNotificacoes;
     // End of variables declaration//GEN-END:variables
 }
