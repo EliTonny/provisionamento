@@ -1,10 +1,11 @@
 package provisionamento.model;
 
-import provisionamento.DaoArquivo.ModeloBase;
+import DaoArquivo.ModeloBase;
 
 public class Categoria extends ModeloBase{
+    
     private String descricao;
-
+    
     public String getDescricao() {
         return descricao;
     }
