@@ -46,7 +46,6 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jLabel4.setText("Senha:");
 
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.setPreferredSize(new java.awt.Dimension(113, 20));
 
         jButton1.setText("Login");
