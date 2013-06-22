@@ -33,6 +33,8 @@ public class GrupoComunitario extends Grupo{
     
     public void addComprador(){
         this.comprador++;
+        if(this.comprador == participantes.size())
+            this.comprador = 0;
     }
     
     public void setComprador(int comprador){
