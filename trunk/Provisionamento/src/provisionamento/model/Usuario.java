@@ -1,6 +1,8 @@
 package provisionamento.model;
 
 import DaoArquivo.ModeloBase;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario extends ModeloBase {
 
@@ -8,7 +10,12 @@ public class Usuario extends ModeloBase {
     private String senha;
     private String email;
     private double salario;
+    private List<Mensagem> mensagens;
 
+    public Usuario(){
+        this.mensagens = new ArrayList<>();
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -39,6 +46,14 @@ public class Usuario extends ModeloBase {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public void setMensagem(Mensagem mensagem){
+        this.mensagens.add(mensagem);
+    }
+    
+    public void removeMensagem(Mensagem mensagem){
+        this.mensagens.remove(mensagem);
     }
 
     @Override
