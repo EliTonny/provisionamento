@@ -90,7 +90,6 @@ public class FrameCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
 
         try {
             Categoria categoria = new Categoria();
@@ -101,6 +100,7 @@ public class FrameCategoria extends javax.swing.JFrame {
         } catch (DaoException ex) {
             System.out.println(ex.getMessage());
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
