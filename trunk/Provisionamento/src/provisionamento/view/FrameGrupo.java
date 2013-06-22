@@ -1,5 +1,14 @@
 package provisionamento.view;
 
+import MyExceptions.DaoException;
+import Sistema.Dao;
+import Sistema.Factoring;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
+import provisionamento.model.Categoria;
+import provisionamento.model.Grupo;
+
 public class FrameGrupo extends javax.swing.JFrame {
 
     /**
@@ -7,6 +16,19 @@ public class FrameGrupo extends javax.swing.JFrame {
      */
     public FrameGrupo() {
         initComponents();
+        
+         List<Categoria> categorias = new ArrayList<Categoria>();    
+        
+        try {
+            Dao<Categoria> dao = Factoring.getDaoCategoria();
+            categorias = dao.busca();
+        } catch (DaoException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (Categoria cat: categorias){
+            jComboBox1.addItem(cat);
+        }
     }
 
     /**
@@ -54,6 +76,11 @@ public class FrameGrupo extends javax.swing.JFrame {
         jTextField2.setText("22/04/1994");
 
         jButton2.setText("Adicionar Grupo");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Notificar");
 
@@ -142,6 +169,13 @@ public class FrameGrupo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        Grupo grupo = new Grupo() {};
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,9 +215,6 @@ public class FrameGrupo extends javax.swing.JFrame {
                 new FrameGrupo().setVisible(true);
             }
         });
-        
-        
-
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
