@@ -94,8 +94,7 @@ public class FrameCategoria extends javax.swing.JFrame {
         try {
             Categoria categoria = new Categoria();
             categoria.setDescricao(jTextField1.getText());
-            Factoring factory = new Factoring();
-            Dao<Categoria> dao = factory.getDaoCategoria();
+            Dao<Categoria> dao = Factoring.getDaoCategoria();
             dao.grava(categoria);
         } catch (DaoException ex) {
             System.out.println(ex.getMessage());
