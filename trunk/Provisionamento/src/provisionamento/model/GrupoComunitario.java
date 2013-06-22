@@ -41,7 +41,7 @@ public class GrupoComunitario extends Grupo{
         this.comprador = comprador;
     }
     
-    public int getComprador(){
-        return this.comprador;
+    public Participante getComprador(){
+        return this.participantes.get(comprador);
     }
 }

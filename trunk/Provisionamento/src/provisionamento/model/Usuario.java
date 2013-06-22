@@ -48,8 +48,9 @@ public class Usuario extends ModeloBase {
         this.senha = senha;
     }
     
-    public void setMensagem(Mensagem mensagem){
-        this.mensagens.add(mensagem);
+    public void setMensagem(String mensagem){
+        Mensagem novaMsg = new Mensagem(mensagem);
+        this.mensagens.add(novaMsg);
     }
     
     public void removeMensagem(Mensagem mensagem){
