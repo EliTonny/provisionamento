@@ -91,16 +91,7 @@ public class FrameCategoria extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        /*
-         Categoria categoria = new Categoria();
-         categoria.setDescricao(jTextField1.getText());
-        
-         Factoring factory = new Factoring();
-         try {
-         factory.getDaoCategoria().grava(categoria);
-         } catch (DaoException ex) {
-         ex.getMessage();
-         }*/
+
         try {
             Categoria categoria = new Categoria();
             categoria.setDescricao(jTextField1.getText());
