@@ -15,7 +15,8 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable {
     private File arquivo;
 
     public DaoArquivo(String nomeArquivo) throws DaoException {
-        this.arquivo = new File(Resources.CAMINHO_ARQUIVOS2 + "\\" + nomeArquivo);
+        //this.arquivo = new File(Resources.CAMINHO_ARQUIVOS2 + "\\" + nomeArquivo);
+        this.arquivo = new File("D:\\teste\\" + nomeArquivo);
         dados = new Dados<>();
         this.dados.Carrega(arquivo);
         this.AtualizaReferencias();
