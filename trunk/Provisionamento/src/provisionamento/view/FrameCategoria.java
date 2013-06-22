@@ -4,6 +4,12 @@
  */
 package provisionamento.view;
 
+import MyExceptions.DaoException;
+import Sistema.Factoring;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import provisionamento.model.Categoria;
+
 /**
  *
  * @author Lucas
@@ -39,6 +45,11 @@ public class FrameCategoria extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         jButton1.setText("Adicionar Categoria");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,6 +89,22 @@ public class FrameCategoria extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        Categoria categoria = new Categoria();
+        categoria.setDescricao(jTextField1.getText());
+        
+        Factoring factory = new Factoring();
+        try {
+            factory.getDaoCategoria().grava(categoria);
+        } catch (DaoException ex) {
+            ex.getMessage();
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
