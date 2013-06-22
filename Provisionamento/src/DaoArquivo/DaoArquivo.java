@@ -18,6 +18,8 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable {
         //this.arquivo = new File(Resources.CAMINHO_ARQUIVOS + "\\" + nomeArquivo);
         this.arquivo = new File("C:\\Temp\\" + nomeArquivo);
         dados = new Dados<>();
+        this.dados.Carrega(arquivo);
+        this.AtualizaReferencias();
     }
 
     protected abstract void AtualizaReferencias() throws DaoException;
@@ -86,10 +88,17 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable {
             throw new DaoException(ex);
         }
     }
-    
-    public void abre() throws DaoException
-    {
-        this.dados.Carrega(arquivo);
-        this.AtualizaReferencias();
+
+    public void abre() throws DaoException {
+        //Serve apenas para criar a instancia dessa classe
+        //e carregar os dados na memória.
+    }
+
+    protected boolean estaGravado(ModeloBase object) {
+        if (object == null) {
+            return true;
+        }
+
+        return object.getId() >= 0;
     }
 }

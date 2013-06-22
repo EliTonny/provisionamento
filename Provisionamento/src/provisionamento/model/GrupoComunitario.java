@@ -7,6 +7,10 @@ public class GrupoComunitario extends Grupo{
     
     private Usuario criador;
     private List<Participante> participantes;
+
+    public List<Participante> getParticipantes() {
+        return participantes;
+    }
     private int comprador;
     
     public GrupoComunitario(){

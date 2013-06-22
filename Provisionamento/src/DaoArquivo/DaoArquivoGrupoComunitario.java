@@ -3,7 +3,9 @@ package DaoArquivo;
 import Sistema.Dao;
 import MyExceptions.DaoException;
 import MyExceptions.GravaDadosException;
+import MyExceptions.ReferenciaException;
 import provisionamento.model.GrupoComunitario;
+import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
 
 public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> implements Dao<GrupoComunitario> {
@@ -23,10 +25,17 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
 
     @Override
     public void grava(GrupoComunitario grupo) throws GravaDadosException {
-        if (grupo.getCriador().getId() < 0) {
+        if (!estaGravado(grupo.getCriador())) {
             throw new GravaDadosException("Tentativa de gravar um Grupo Comunitário que possui referência a outros objetos que não estão gravados");
         }
-        super.grava(grupo);
+        if (!estaGravado(grupo.getCategoria())) {
+            throw new GravaDadosException("Tentativa de gravar um Grupo Comunitário que possui referência a outros objetos que não estão gravados");
+        }
+        for (Participante p : grupo.getParticipantes()) {
+            if (!estaGravado(p)) {
+                throw new GravaDadosException("Tentativa de gravar um Grupo Comunitário que possui referência a outros objetos que não estão gravados");
+            }
+        }
     }
 
     @Override
@@ -44,9 +53,13 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
         try {
             Usuario u;
             Dao<Usuario> DaoUsuario = DaoArquivoUsuario.getInstancia();
+            Dao<Participante> DaoParticipante = DaoArquivoParticipante.getInstancia();
             for (GrupoComunitario g : this.dados.buscaTodos()) {
                 u = DaoUsuario.busca(g.getCriador().getId());
                 g.setCriador(u);
+                for (Participante p : g.getParticipantes()) {
+                    p = DaoParticipante.busca(p.getId());
+                }
             }
         } catch (DaoException ex) {
             throw new DaoException("Erro ao atualizar as referencias.", ex);
