@@ -1,10 +1,8 @@
 package provisionamento.view;
 
 import Dao.Dao;
-import java.util.Random;
-import javax.swing.JOptionPane;
-import provisionamento.DaoArquivo.DaoArquivoGrupoComunitario;
-import provisionamento.DaoArquivo.DaoArquivoUsuario;
+import DaoArquivo.DaoArquivoGrupoComunitario;
+import DaoArquivo.DaoArquivoUsuario;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Usuario;
 
@@ -19,11 +17,20 @@ public class Testes {
                      DaoArquivoUsuario.getInstancia();
              
              Usuario u;
-             for(int i = 0; i < 10; i++)
+             GrupoComunitario g;
+             for(int i = 0; i < 1000; i++)
              {
                 u = new Usuario();
                 daoU.grava(u);
+                g = new GrupoComunitario();
+                g.setCriador(u);
+                daoG.grava(g);
                 System.out.println(i);
+             }
+             
+             for(GrupoComunitario gr : daoG.busca())
+             {
+                 daoG.deleta(gr);
              }
 
             

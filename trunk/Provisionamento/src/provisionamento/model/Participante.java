@@ -1,6 +1,6 @@
 package provisionamento.model;
 
-import provisionamento.DaoArquivo.ModeloBase;
+import DaoArquivo.ModeloBase;
 
 public class Participante extends ModeloBase{
     private Usuario usuario;
