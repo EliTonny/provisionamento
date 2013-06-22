@@ -1,9 +1,8 @@
 package DaoArquivo;
 
-import Sistema.Dao;
 import MyExceptions.DaoException;
 import MyExceptions.GravaDadosException;
-import MyExceptions.ReferenciaException;
+import Sistema.Dao;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
