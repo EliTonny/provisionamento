@@ -12,8 +12,12 @@ import provisionamento.model.GrupoComunitario;
  *
  * @author Eli T. de Souza
  */
-public class Observer {
-    public void update(){
+public class AvisaCompradores {
+    
+    private AvisaCompradores(){
+    }
+    
+    public static void avisar(){
         try {
             Dao<GrupoComunitario> dao = Factoring.getDaoGrupoComunitario();
             List<GrupoComunitario> grupos = dao.busca();
@@ -28,7 +32,7 @@ public class Observer {
                 }
             }
         } catch (DaoException ex) {
-            Logger.getLogger(Observer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvisaCompradores.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
