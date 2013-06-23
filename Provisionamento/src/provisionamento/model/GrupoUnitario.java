@@ -11,6 +11,7 @@ public class GrupoUnitario  extends ModeloBase{
     private int QrdDiasNotificacao;
     private Usuario criador;
     private Date dataCriacao;
+    private boolean finalizado;
 
      public GrupoUnitario() {
         this.id = -1;
@@ -69,6 +70,14 @@ public class GrupoUnitario  extends ModeloBase{
     public String toString()
     {
         return this.getCategoria().getDescricao() + this.dataCriacao.toString();
+    }
+
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
     
 }
