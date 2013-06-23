@@ -3,9 +3,8 @@ package provisionamento.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrupoComunitario extends Grupo{
-    
-    private Usuario criador;
+public class GrupoComunitario extends GrupoUnitario{
+        
     private List<Participante> participantes;
 
     public List<Participante> getParticipantes() {
@@ -15,14 +14,6 @@ public class GrupoComunitario extends Grupo{
     
     public GrupoComunitario(){
         participantes = new ArrayList<>();
-    }
-
-    public Usuario getCriador() {
-        return criador;
-    }   
-
-    public void setCriador(Usuario criador) {
-        this.criador = criador;
     }
     
     public void addParticipante(Participante participante){
