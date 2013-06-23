@@ -4,12 +4,14 @@ import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
+import provisionamento.model.GrupoComunitario;
 import provisionamento.model.GrupoUnitario;
 
 public class FrameGrupoUnitario extends javax.swing.JFrame {
@@ -18,7 +20,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
      * Creates new form FrameGrupoUnitario
      */
     private FrameCategoria frameCategoria;
-    List<Categoria> categorias = new ArrayList<Categoria>();
+
     
     public FrameGrupoUnitario() {
 
@@ -29,11 +31,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
             cbCategoria.removeAllItems();
             Dao<Categoria> daoCat = Factoring.getDaoCategoria();
             List<Categoria> categorias = daoCat.busca();
-            Iterator it = categorias.iterator();
-
-            while(it.hasNext()){
-                cbCategoria.addItem((Categoria) it.next());
-            }
 
             for (Categoria cat: categorias){
                 cbCategoria.addItem(cat);
@@ -68,7 +65,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btFechar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         labelCategoria.setText("Categoria:");
 
@@ -91,7 +88,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
 
         jLabel3.setText("Vencimento:");
 
-        tfDataVencimento.setText("22/04/1994");
         tfDataVencimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfDataVencimentoActionPerformed(evt);
@@ -105,7 +101,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Notificar");
+        jLabel6.setText("Notificar:");
 
         jLabel7.setText("dias antes do vencimento.");
 
@@ -138,10 +134,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,8 +154,13 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7))
+                                    .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(211, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +202,62 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void btAddGrupoIndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoIndActionPerformed
-        // TODO add your handling code here:
+        int qtdItens = 0;
+        int qtdAntecip = 0;
+        int qtdVencimento = 0;
+        boolean ok = true;
+        Date prazo = new Date();
+        
+        if(tfQtdItens.getText().equals("")){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser informada!");
+        }
+        try{
+            qtdItens = Integer.parseInt(tfQtdItens.getText());
+        } catch(NumberFormatException ex){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser um número!");
+        }
+        
+        if(tfDataVencimento.getText().equals("")){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Prazo de validade deve ser informado!");
+        }
+        try{
+            qtdVencimento = Integer.parseInt(tfDataVencimento.getText());
+        } catch(NumberFormatException ex){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Prazo de validade deve ser um número!");
+        }
+        if(tfQtdDias.getText().equals("")){
+            qtdAntecip = 0;
+        } else{
+            try{
+                qtdAntecip = Integer.parseInt(tfQtdDias.getText());
+            } catch(NumberFormatException ex){
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Dias para notificar deve ser um número!");
+            }
+        }
+        if(ok == true){
+            try {
+                prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
+                Dao<GrupoUnitario> dao = Factoring.getDaoGrupoUnitario();
+                GrupoUnitario grupoUnitario = new GrupoUnitario();
+                grupoUnitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
+                grupoUnitario.setQrdDiasNotificacao(qtdAntecip);
+                grupoUnitario.setQuantidade(qtdItens);
+                grupoUnitario.setPrazoValidade(prazo);
+                
+                dao.grava(grupoUnitario);
+                JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                tfDataVencimento.setText(null);
+                tfQtdDias.setText(null);
+                tfQtdItens.setText(null);
+            } catch (DaoException ex) {
+                Logger.getLogger(FrameGrupoUnitario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
