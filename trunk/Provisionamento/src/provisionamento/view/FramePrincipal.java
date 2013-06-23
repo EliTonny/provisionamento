@@ -21,7 +21,7 @@ import provisionamento.model.Mensagem;
  *
  * @author Lucas
  */
-public class FramePrincipal extends javax.swing.JFrame implements Observer{
+public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
     /**
      * Creates new form FramePrincipal
@@ -51,34 +51,44 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
             ArrayList<GrupoComunitario> grupoCriador =
                     controller.getGruposCriador(
                     Session.getInstancia().getUsuarioLogado());
-            
-            ArrayList<GrupoUnitario> grupoCriadorUni = controller.getGruposCriadorUni(Session.getInstancia().getUsuarioLogado());
-            
+
+            ArrayList<GrupoUnitario> grupoPessoal =
+                    controller.getGruposPessoais(
+                    Session.getInstancia().getUsuarioLogado());
+
+            DefaultListModel<GrupoComunitario> modelSeusGrupos =
+                    new DefaultListModel<>();
+
+            DefaultListModel<GrupoUnitario> modelGruposPessoais =
+                    new DefaultListModel<>();
+
+            DefaultListModel<GrupoComunitario> modelGruposParticipantes =
+                    new DefaultListModel<>();
+
+            lsSeusGrupos.setModel(modelSeusGrupos);
+            lsGruposPessoais.setModel(modelGruposPessoais);
+            lsGruposComunParticipa.setModel(modelGruposParticipantes);
+
             for (GrupoComunitario grupoComunitario : grupoCriador) {
-                listaMeusGrupos.addElement(grupoComunitario);
-            }
-            
-            for (GrupoComunitario grupoComunitario : grupoParticipante) {
-                listaGruposParticipo.addElement(grupoComunitario);
-            }
-            
-            for (GrupoUnitario grupoUnitario : grupoCriadorUni) {
-                listaMeusGrupos.addElement(grupoUnitario);
+                modelSeusGrupos.addElement(grupoComunitario);
             }
 
-            lsGruposComunParticipa.setModel(listaGruposParticipo);
-            lsSeusGrupos.setModel(listaMeusGrupos);
-            
+            for (GrupoUnitario grupoUnitario : grupoPessoal) {
+                modelGruposPessoais.addElement(grupoUnitario);
+            }
+
+            for (GrupoComunitario grupoComunitario : grupoParticipante) {
+                modelGruposParticipantes.addElement(grupoComunitario);
+            }
+
             ConcreteSubject.getInstancia().registerObserver(this);
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
     private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
-    private DefaultListModel listaMeusGrupos = new DefaultListModel();
-    private DefaultListModel<GrupoComunitario> listaGruposParticipo = new DefaultListModel<>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +121,11 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         BtAddUsuario = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lsGruposPessoais = new javax.swing.JList();
+        jLabel6 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Sistema de Provisionamento");
@@ -130,7 +145,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
             }
         });
 
-        jLabel4.setText("Seus Grupos");
+        jLabel4.setText("Seus Grupos Comunitários");
 
         lsSeusGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -167,12 +182,16 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
 
         jButton1.setText("Gerar");
 
-        BtAddUsuario.setText("Adicionar Usuarios");
+        BtAddUsuario.setText("Cadastrar Usuario");
         BtAddUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtAddUsuarioActionPerformed(evt);
             }
         });
+
+        jScrollPane4.setViewportView(lsGruposPessoais);
+
+        jLabel6.setText("Grupos pessoais");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,84 +206,88 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 282, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(170, 170, 170)
+                                .addGap(60, 60, 60)
                                 .addComponent(btLogout)
-                                .addGap(30, 30, 30))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtAddUsuario)
+                                .addGap(36, 36, 36))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(346, 346, 346))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbUsuLogado)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5)))
-                        .addGap(18, 18, 18))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(721, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(btGrupoComunitario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(502, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btGrupo)
-                        .addGap(90, 90, 90)
-                        .addComponent(BtAddUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btGrupoComunitario)
-                        .addGap(33, 33, 33))))
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(btLogout))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtAddUsuario)
+                            .addComponent(btLogout))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbUsuLogado)
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btGrupo)
                     .addComponent(btGrupoComunitario)
-                    .addComponent(BtAddUsuario))
-                .addGap(31, 31, 31)
+                    .addComponent(btGrupo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButton1)
@@ -272,7 +295,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -299,7 +322,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_BtAddUsuarioActionPerformed
 
     private void lsSeusGruposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsSeusGruposMouseClicked
-        GrupoComunitario com = (GrupoComunitario)lsSeusGrupos.getSelectedValue();
+        GrupoComunitario com = (GrupoComunitario) lsSeusGrupos.getSelectedValue();
         new FrameGrupoComunitarioSituacao(com).setVisible(true);
     }//GEN-LAST:event_lsSeusGruposMouseClicked
 
@@ -349,36 +372,45 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbUsuLogado;
     private javax.swing.JList lsGruposComunParticipa;
+    private javax.swing.JList lsGruposPessoais;
     private javax.swing.JList lsSeusGrupos;
     private javax.swing.JTextArea taNotificacoes;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Object obj) {
-        if(obj instanceof GrupoComunitario){
-            GrupoComunitario grupoComunitario;
-            grupoComunitario = (GrupoComunitario) obj;
-            if(grupoComunitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())){
-                listaMeusGrupos.addElement(grupoComunitario);
+        if (obj instanceof GrupoComunitario) {
+
+            GrupoComunitario grupo = (GrupoComunitario) obj;
+            if (grupo.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+                DefaultListModel<GrupoComunitario> modelSeusGrupos =
+                        (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
+                modelSeusGrupos.addElement(grupo);
+            } else {
+                DefaultListModel<GrupoComunitario> modelGruposParticipantes =
+                        (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
+                modelGruposParticipantes.addElement(grupo);
             }
-            
-            if(grupoComunitario.getParticipantes().contains(grupoComunitario)){
-                listaGruposParticipo.addElement(grupoComunitario);
-            }
-        } else if(obj instanceof GrupoUnitario){
-            GrupoUnitario grupoUnitario;
-            grupoUnitario = (GrupoUnitario) obj;
-            if(grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())){
-                listaMeusGrupos.addElement(grupoUnitario);
+
+        } else if (obj instanceof GrupoUnitario) {
+
+            DefaultListModel<GrupoUnitario> modelGruposPessoais =
+                    (DefaultListModel<GrupoUnitario>) lsSeusGrupos.getModel();
+
+            GrupoUnitario grupoUnitario = (GrupoUnitario) obj;
+            if (grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+                modelGruposPessoais.addElement(grupoUnitario);
             }
         }
     }

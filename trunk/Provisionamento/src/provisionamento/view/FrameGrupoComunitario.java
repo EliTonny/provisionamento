@@ -398,17 +398,16 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
             grupoComunitario.setQuantidade(qtdItens);
             grupoComunitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
             grupoComunitario.setValorCompra(Double.parseDouble(TxtValor.getText().replace(',', '.')));
-            grupoComunitario.addComprador();
             grupoComunitario.setQrdDiasNotificacao(qtdAntecip);
             grupoComunitario.setPrazoValidade(prazo);
 
             try {
                 Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
                 Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
-                participante = new Participante();
-                participante.setUsuario(Session.getInstancia().getUsuarioLogado());
-                daoParticipante.grava(participante);
-                grupoComunitario.addParticipante(participante);
+                //participante = new Participante();
+                //participante.setUsuario(Session.getInstancia().getUsuarioLogado());
+                //daoParticipante.grava(participante);
+                //grupoComunitario.addParticipante(participante);
                 
                 while (!listaParticipantes.isEmpty()) {
                     participante = new Participante();
