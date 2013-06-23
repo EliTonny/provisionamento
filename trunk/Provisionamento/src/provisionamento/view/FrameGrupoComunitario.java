@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import provisionamento.model.Categoria;
+import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
 
 /**
@@ -30,6 +31,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         initComponents();
         tfCriador.setText(UsuarioLogado.getUsuarioLogado().getNome());
         cbCategoria.removeAllItems();
+        lsParticipantesGrupo.setModel(listaParticipantes);
         try {
             Dao<Categoria> daoCat = Factoring.getDaoCategoria();
             List<Categoria> categorias = daoCat.busca();
@@ -55,6 +57,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
     }
     
     private FrameCategoria frameCategoria;
+    private DefaultListModel<Participante> listaParticipantes = new DefaultListModel<>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,8 +125,18 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         jLabel8.setText("Participantes do Grupo");
 
         btPraCa.setText("<<");
+        btPraCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPraCaActionPerformed(evt);
+            }
+        });
 
         btPraLa.setText(">>");
+        btPraLa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPraLaActionPerformed(evt);
+            }
+        });
 
         btAddGrupoComun.setText("Adicionar Grupo");
 
@@ -155,13 +168,15 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btAddGrupoComun)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btPraLa, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btPraCa, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                            .addComponent(btPraCa, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btAddGrupoComun)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(83, 83, 83)
                                 .addComponent(jLabel7)))
@@ -246,7 +261,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                     .addComponent(tfCriador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,17 +272,15 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                                 .addGap(111, 111, 111)
                                 .addComponent(btPraLa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btPraCa)))
-                        .addGap(0, 56, Short.MAX_VALUE))
+                                .addComponent(btPraCa))))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btAddGrupoComun)
-                            .addComponent(btFechar))))
+                        .addComponent(jScrollPane3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btAddGrupoComun)
+                    .addComponent(btFechar))
                 .addContainerGap())
         );
 
@@ -282,6 +295,26 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         frameCategoria = new FrameCategoria();
         frameCategoria.setVisible(true);
     }//GEN-LAST:event_btAddCategoriaActionPerformed
+
+    private void btPraLaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPraLaActionPerformed
+        List<Usuario> usariosSelecionados = lsMembrosRepublica.getSelectedValuesList();
+        Iterator itUsuSel = usariosSelecionados.iterator();
+        while(itUsuSel.hasNext()){
+            Participante participante = new Participante();
+            participante.setUsuario((Usuario) itUsuSel.next());
+            
+            listaParticipantes.addElement(participante);
+        }
+    }//GEN-LAST:event_btPraLaActionPerformed
+
+    private void btPraCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPraCaActionPerformed
+        List<Participante> participantesSelecionados = lsParticipantesGrupo.getSelectedValuesList();
+        Iterator itParSel = participantesSelecionados.iterator();
+        
+        while(itParSel.hasNext()){
+            listaParticipantes.removeElement((Participante) itParSel.next());
+        }
+    }//GEN-LAST:event_btPraCaActionPerformed
 
     /**
      * @param args the command line arguments
