@@ -7,6 +7,7 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -44,8 +45,8 @@ public class FrameUsuario extends javax.swing.JFrame {
         btFechar = new javax.swing.JButton();
         tfNome = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
-        tfSenha = new javax.swing.JTextField();
-        tfConSenha = new javax.swing.JTextField();
+        tfSenha = new javax.swing.JPasswordField();
+        tfConSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,23 +91,19 @@ public class FrameUsuario extends javax.swing.JFrame {
                                 .addComponent(btAdiciona)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btFechar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(74, 74, 74)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfEmail)
+                                    .addComponent(tfNome)
                                     .addComponent(tfSenha)
-                                    .addComponent(tfConSenha))))))
+                                    .addComponent(tfConSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,10 +126,10 @@ public class FrameUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfConSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAdiciona)
                     .addComponent(btFechar))
@@ -155,7 +152,7 @@ public class FrameUsuario extends javax.swing.JFrame {
             this.limpar();
         }
         
-        if(!tfSenha.getText().equals(tfConSenha.getText())){
+        if(!Arrays.equals(tfSenha.getPassword(), tfConSenha.getPassword())){
             tfSenha.setText("");
             tfConSenha.setText("");
             ok = false;
@@ -168,7 +165,7 @@ public class FrameUsuario extends javax.swing.JFrame {
                 Usuario usuario = new Usuario();
                 usuario.setNome(tfNome.getText());
                 usuario.setEmail(tfEmail.getText());
-                usuario.setSenha(tfSenha.getText());
+                usuario.setSenha(tfSenha.getPassword());
                 dao.grava(usuario);
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                 this.limpar();
@@ -228,10 +225,10 @@ public class FrameUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbNovoUsuario;
-    private javax.swing.JTextField tfConSenha;
+    private javax.swing.JPasswordField tfConSenha;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfNome;
-    private javax.swing.JTextField tfSenha;
+    private javax.swing.JPasswordField tfSenha;
     // End of variables declaration//GEN-END:variables
 
     public void limpar(){

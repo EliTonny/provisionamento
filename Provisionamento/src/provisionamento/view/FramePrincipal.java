@@ -21,16 +21,16 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         
-        /*List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
+        List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
         Iterator it = mensagens.iterator();
         Mensagem mensagem;
         while(it.hasNext()){
             mensagem = (Mensagem) it.next();
             taNotificacoes.setText(taNotificacoes.getText() + 
                                    "\n" + mensagem.getMensagem());
-        }*/
+        }
         
-        //lbUsuLogado.setText(lbUsuLogado.getText() + UsuarioLogado.getUsuarioLogado().getNome() + "!");
+        lbUsuLogado.setText(lbUsuLogado.getText() + UsuarioLogado.getUsuarioLogado().getNome() + "!");
     }
     
     private FrameGrupo frameGrupo;

@@ -7,7 +7,7 @@ import java.util.List;
 public class Usuario extends ModeloBase {
 
     private String nome;
-    private String senha;
+    private char[] senha;
     private String email;
     private double salario;
     private List<Mensagem> mensagens;
@@ -40,11 +40,11 @@ public class Usuario extends ModeloBase {
         this.salario = salario;
     }
 
-    public String getSenha() {
+    public char[] getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(char[] senha) {
         this.senha = senha;
     }
     
