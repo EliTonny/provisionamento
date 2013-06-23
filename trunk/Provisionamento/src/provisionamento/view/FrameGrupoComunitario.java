@@ -19,6 +19,8 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         initComponents();
         tfCriador.setText(UsuarioLogado.getUsuarioLogado().getNome());
     }
+    
+    private FrameCategoria frameCategoria;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +66,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btAddCategoria.setText("+");
+        btAddCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Criador:");
 
@@ -233,6 +240,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
+
+    private void btAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddCategoriaActionPerformed
+        frameCategoria = new FrameCategoria();
+        frameCategoria.setVisible(true);
+    }//GEN-LAST:event_btAddCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
