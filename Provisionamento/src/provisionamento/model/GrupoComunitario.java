@@ -7,7 +7,6 @@ import java.util.List;
 public class GrupoComunitario extends GrupoUnitario{
         
     private List<Participante> participantes;
-    private Date dataCriacao;
     private int comprador;
     private double valorCompra;
 
@@ -24,8 +23,8 @@ public class GrupoComunitario extends GrupoUnitario{
     }
     
     public GrupoComunitario(){
+        super();
         participantes = new ArrayList<>();
-        dataCriacao = new Date();
     }
     
     public void addParticipante(Participante participante){
@@ -50,11 +49,5 @@ public class GrupoComunitario extends GrupoUnitario{
     
     public Participante getComprador(){
         return this.participantes.get(comprador);
-    }
-    
-    @Override
-    public String toString()
-    {
-        return this.getCategoria().getDescricao() + this.dataCriacao.toString();
     }
 }
