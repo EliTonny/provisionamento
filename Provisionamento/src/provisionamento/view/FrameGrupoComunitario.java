@@ -415,9 +415,10 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 }
                 daoGrupoComunitario.grava(grupoComunitario);
 
-                tfDataVencimento.setText("");
-                tfQtdDias.setText("");
-                tfQtdItens.setText("");
+                tfDataVencimento.setText(null);
+                tfQtdDias.setText(null);
+                tfQtdItens.setText(null);
+                TxtValor.setText(null);
                 
                 ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
                 this.iniListaUsuario();
