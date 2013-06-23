@@ -12,6 +12,15 @@ public class GrupoUnitario  extends ModeloBase{
     private Usuario criador;
     private Date dataCriacao;
     private boolean finalizado;
+    private double valorCompra;
+
+    public double getValorCompra() {
+        return valorCompra;
+    }
+
+    public void setValorCompra(double valorCompra) {
+        this.valorCompra = valorCompra;
+    }
 
      public GrupoUnitario() {
         this.id = -1;
