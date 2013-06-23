@@ -35,6 +35,7 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
                 throw new GravaDadosException("Tentativa de gravar um Grupo Comunitário que possui referência a outros objetos que não estão gravados");
             }
         }
+        super.grava(grupo);
     }
 
     @Override
