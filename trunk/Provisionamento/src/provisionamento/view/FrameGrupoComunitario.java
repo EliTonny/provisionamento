@@ -31,11 +31,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         try {
             Dao<Categoria> daoCat = Factoring.getDaoCategoria();
             List<Categoria> categorias = daoCat.busca();
-            
+
             for (Categoria categoria : categorias) {
                 cbCategoria.addItem(categoria);
             }
-            
+
             this.iniListaUsuario();
             lsMembrosRepublica.setModel(listaUsuarios);
 
@@ -44,19 +44,19 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         }
         ConcreteSubject.getInstancia().registerObserver(this);
     }
-    
-    public FrameGrupoComunitario(GrupoComunitario grupoComunitario){
+
+    public FrameGrupoComunitario(GrupoComunitario grupoComunitario) {
         initComponents();
         cbCategoria.removeAllItems();
         cbCategoria.addItem(grupoComunitario.getCategoria());
         cbCategoria.setEnabled(false);
         btAddCategoria.setEnabled(false);
         tfCriador.setText(Session.getInstancia().getUsuarioLogado().getNome());
-        
+
         this.iniListaUsuario();
         List<Participante> participantes = grupoComunitario.getParticipantes();
         for (Participante participante : participantes) {
-            if(!Session.getInstancia().getUsuarioLogado().equals(participante.getUsuario())){
+            if (!Session.getInstancia().getUsuarioLogado().equals(participante.getUsuario())) {
                 listaParticipantes.addElement(participante.getUsuario());
                 listaUsuarios.removeElement(participante.getUsuario());
             }
@@ -67,7 +67,6 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         lsParticipantesGrupo.setModel(listaParticipantes);
         this.fechar = true;
     }
-    
     private FrameCategoria frameCategoria;
     private DefaultListModel<Usuario> listaParticipantes = new DefaultListModel<>();
     private DefaultListModel<Usuario> listaUsuarios = new DefaultListModel();
@@ -88,10 +87,8 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         cbCategoria = new javax.swing.JComboBox();
         btAddCategoria = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        tfQtdItens = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        tfDataVencimento = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tfCriador = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -104,11 +101,13 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         jScrollPane4 = new javax.swing.JScrollPane();
         lsParticipantesGrupo = new javax.swing.JList();
         jLabel9 = new javax.swing.JLabel();
-        tfQtdDias = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         btFechar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        TxtValor = new javax.swing.JFormattedTextField();
+        tfValor = new javax.swing.JFormattedTextField();
+        tfDiasVencimento = new javax.swing.JFormattedTextField();
+        tfDiasNotificacao = new javax.swing.JFormattedTextField();
+        tfQuantidade = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -179,12 +178,18 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
 
         jLabel11.setText("Valor:");
 
-        TxtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        TxtValor.addActionListener(new java.awt.event.ActionListener() {
+        tfValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tfValor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtValorActionPerformed(evt);
+                tfValorActionPerformed(evt);
             }
         });
+
+        tfDiasVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        tfDiasNotificacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        tfQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +223,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                                                 .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btAddCategoria))
-                                            .addComponent(tfQtdItens, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,22 +232,22 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                                             .addComponent(jLabel3))
                                         .addGap(19, 19, 19)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(tfCriador, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(tfCriador)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(tfDiasNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(jLabel9)
                                                         .addGap(0, 0, Short.MAX_VALUE)))
                                                 .addGap(144, 144, 144))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(jLabel5))
-                                                    .addComponent(TxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(tfDiasVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabel5)))
                                                 .addGap(0, 0, Short.MAX_VALUE))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(246, 246, 246)
@@ -282,27 +287,27 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                     .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfQtdItens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(tfDiasVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(tfDiasNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfCriador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(TxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
@@ -364,44 +369,27 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     private void btAddGrupoComunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoComunActionPerformed
         boolean ok = true;
         int qtdItens = 0;
-        int qtdVencimento = 0;
-        int qtdAntecip = 0;
+        int qtdDiasVencimento = 0;
+        int qtdDiasNotificaocao = 0;
         Date prazo = new Date();
         Participante participante;
 
-        if (tfQtdItens.getText().equals("")) {
+        if (tfQuantidade.getText().equals("")) {
             ok = false;
             JOptionPane.showMessageDialog(this, "Quantidade de itens não informada!");
         }
-        try {
-            qtdItens = Integer.parseInt(tfQtdItens.getText());
-        } catch (NumberFormatException ex) {
-            ok = false;
-            JOptionPane.showMessageDialog(this, "Quantidade de itens deve ser um número!");
-        }
 
-        if (tfDataVencimento.getText().equals("")) {
+        if (tfDiasVencimento.getText().equals("")) {
             ok = false;
             JOptionPane.showMessageDialog(this, "Prazo de vencimento não informado!");
         }
-        try {
-            qtdVencimento = Integer.parseInt(tfDataVencimento.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Prazo de vencimento deve ser um número!");
+
+        if (tfDiasNotificacao.getText().equals("")) {
+            ok = false;
+            JOptionPane.showMessageDialog(this, "Prazo de notificação não informado!");
         }
 
-        if (tfQtdDias.getText().equals("")) {
-            qtdAntecip = 0;
-        } else {
-            try {
-                qtdAntecip = Integer.parseInt(tfQtdDias.getText());
-            } catch (NumberFormatException ex) {
-                ok = false;
-                JOptionPane.showMessageDialog(this, "Dias para notificar deve ser um número!");
-            }
-        }
-
-        if (TxtValor.getText().trim().equals("")) {
+        if (tfValor.getText().trim().equals("")) {
             ok = false;
             JOptionPane.showMessageDialog(this, "Valor não informado!");
         }
@@ -411,21 +399,25 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
             JOptionPane.showMessageDialog(this, "Lista de participantes deve conter ao menous um participante!");
         }
 
-
         if (ok == true) {
-            prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
+
+            qtdItens = Integer.parseInt(tfQuantidade.getText());
+            qtdDiasVencimento = Integer.parseInt(tfDiasVencimento.getText());
+            qtdDiasNotificaocao = Integer.parseInt(tfDiasNotificacao.getText());
+            prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdDiasVencimento));
+            
             GrupoComunitario grupoComunitario = new GrupoComunitario();
             grupoComunitario.setCriador(Session.getInstancia().getUsuarioLogado());
-            grupoComunitario.setQuantidade(qtdItens);
             grupoComunitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
-            grupoComunitario.setValorCompra(Double.parseDouble(TxtValor.getText().replace(',', '.')));
-            grupoComunitario.setQrdDiasNotificacao(qtdAntecip);
+            grupoComunitario.setQuantidade(qtdItens);
+            grupoComunitario.setValorCompra(Double.parseDouble(tfValor.getText().replace(',', '.')));
+            grupoComunitario.setQrdDiasNotificacao(qtdDiasNotificaocao);
             grupoComunitario.setPrazoValidade(prazo);
 
             try {
                 Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
                 Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
-                
+
                 while (!listaParticipantes.isEmpty()) {
                     participante = new Participante();
                     participante.setUsuario(listaParticipantes.firstElement());
@@ -436,29 +428,29 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 }
                 daoGrupoComunitario.grava(grupoComunitario);
 
-                tfDataVencimento.setText(null);
-                tfQtdDias.setText(null);
-                tfQtdItens.setText(null);
-                TxtValor.setText(null);
-                
+                tfDiasNotificacao.setText(null);
+                tfDiasVencimento.setText(null);
+                tfQuantidade.setText(null);
+                tfValor.setText(null);
+
                 ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
                 this.iniListaUsuario();
-                
+
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
-                if(this.fechar){
+                if (this.fechar) {
                     ConcreteSubject.getInstancia().removeOberser(this);
                     this.dispose();
                 }
-                
+
             } catch (DaoException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
     }//GEN-LAST:event_btAddGrupoComunActionPerformed
 
-    private void TxtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtValorActionPerformed
+    private void tfValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtValorActionPerformed
+    }//GEN-LAST:event_tfValorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -495,7 +487,6 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField TxtValor;
     private javax.swing.JButton btAddCategoria;
     private javax.swing.JButton btAddGrupoComun;
     private javax.swing.JButton btFechar;
@@ -519,21 +510,22 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     private javax.swing.JList lsMembrosRepublica;
     private javax.swing.JList lsParticipantesGrupo;
     private javax.swing.JTextField tfCriador;
-    private javax.swing.JTextField tfDataVencimento;
-    private javax.swing.JTextField tfQtdDias;
-    private javax.swing.JTextField tfQtdItens;
+    private javax.swing.JFormattedTextField tfDiasNotificacao;
+    private javax.swing.JFormattedTextField tfDiasVencimento;
+    private javax.swing.JFormattedTextField tfQuantidade;
+    private javax.swing.JFormattedTextField tfValor;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Object obj) {
         if (obj instanceof Categoria) {
             cbCategoria.addItem((Categoria) obj);
-        } else if(obj instanceof Usuario){
+        } else if (obj instanceof Usuario) {
             listaUsuarios.addElement((Usuario) obj);
         }
     }
-    
-    private void iniListaUsuario(){
+
+    private void iniListaUsuario() {
         Dao<Usuario> daoUsu;
         try {
             daoUsu = Factoring.getDaoUsuario();

@@ -97,10 +97,22 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
     private void btGrava(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrava
         try {
             int cont = 0;
+            boolean todosPagaram = true;
             for (Participante p : grupoComunitario.getParticipantes()) {
                 boolean isPago = (boolean) this.TableGrupos.getValueAt(cont++, 2);
                 controller.AtualizarSituacaoParticipante(p, isPago);
+                if (!isPago) {
+                    todosPagaram = false;
+                }
             }
+            if (todosPagaram) {
+                controller.PagarGrupo(grupoComunitario);
+                JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!\n Todos usuarios pagaram, o grupo será finalizado.");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!");
+            }
+
         } catch (DaoException ex) {
             JOptionPane.showInputDialog(this, ex.getMessage());
         }
