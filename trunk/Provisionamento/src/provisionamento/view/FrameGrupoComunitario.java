@@ -44,9 +44,34 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         }
         ConcreteSubject.getInstancia().registerObserver(this);
     }
+    
+    public FrameGrupoComunitario(GrupoComunitario grupoComunitario){
+        initComponents();
+        cbCategoria.removeAllItems();
+        cbCategoria.addItem(grupoComunitario.getCategoria());
+        cbCategoria.setEnabled(false);
+        btAddCategoria.setEnabled(false);
+        tfCriador.setText(Session.getInstancia().getUsuarioLogado().getNome());
+        
+        this.iniListaUsuario();
+        List<Participante> participantes = grupoComunitario.getParticipantes();
+        for (Participante participante : participantes) {
+            if(!Session.getInstancia().getUsuarioLogado().equals(participante.getUsuario())){
+                listaParticipantes.addElement(participante.getUsuario());
+                listaUsuarios.removeElement(participante.getUsuario());
+            }
+        }
+        listaParticipantes.addElement(grupoComunitario.getCriador());
+        listaUsuarios.removeElement(grupoComunitario.getCriador());
+        lsMembrosRepublica.setModel(listaUsuarios);
+        lsParticipantesGrupo.setModel(listaParticipantes);
+        this.fechar = true;
+    }
+    
     private FrameCategoria frameCategoria;
     private DefaultListModel<Usuario> listaParticipantes = new DefaultListModel<>();
     private DefaultListModel<Usuario> listaUsuarios = new DefaultListModel();
+    private boolean fechar;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -400,10 +425,6 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
             try {
                 Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
                 Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
-                //participante = new Participante();
-                //participante.setUsuario(Session.getInstancia().getUsuarioLogado());
-                //daoParticipante.grava(participante);
-                //grupoComunitario.addParticipante(participante);
                 
                 while (!listaParticipantes.isEmpty()) {
                     participante = new Participante();
@@ -424,6 +445,10 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 this.iniListaUsuario();
                 
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                if(this.fechar){
+                    ConcreteSubject.getInstancia().removeOberser(this);
+                    this.dispose();
+                }
                 
             } catch (DaoException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());

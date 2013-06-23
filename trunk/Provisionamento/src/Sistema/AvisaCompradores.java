@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import provisionamento.model.GrupoComunitario;
-import provisionamento.model.Usuario;
+import provisionamento.model.GrupoUnitario;
 
 /**
  *
@@ -23,21 +23,33 @@ public class AvisaCompradores {
         try {
             Dao<GrupoComunitario> dao = Factoring.getDaoGrupoComunitario();
             List<GrupoComunitario> grupos = dao.busca();
-            Iterator it = grupos.iterator();
-            GrupoComunitario grupoComunitario;
+            Dao<GrupoUnitario> daoUni  = Factoring.getDaoGrupoUnitario();
+            List<GrupoUnitario> gruposUni = daoUni.busca();
+            
             Date dataAtual = new Date(); 
             Date prazo = new Date();
             Session.getInstancia().getUsuarioLogado().removeMensagens();
 
-            while(it.hasNext()){
-                grupoComunitario = (GrupoComunitario) it.next();
+            for (GrupoComunitario grupoComunitario : grupos) {
                 prazo.setTime(grupoComunitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoComunitario.getQrdDiasNotificacao() + 1)));
                 if(dataAtual.after(prazo)){
-                    if(Session.getInstancia().getUsuarioLogado().equals(grupoComunitario.getComprador().getUsuario())){
-                        Session.getInstancia().getUsuarioLogado().setMensagem("Você precisa comprar mais " + grupoComunitario.getCategoria().getDescricao());
+                    if(Session.getInstancia().getUsuarioLogado().equals(grupoComunitario.getComprador().getUsuario())
+                       && grupoComunitario.isFinalizado() == false){
+                        Session.getInstancia().getUsuarioLogado().setMensagem("Você precisa comprar mais " + grupoComunitario.getCategoria().getDescricao(),
+                                                                               grupoComunitario);
 
-                        /*Dao<Usuario> daoUsu = Factoring.getDaoUsuario();
-                        daoUsu.grava(Session.getInstancia().getUsuarioLogado());*/
+                    }
+                }
+            }
+            
+            for (GrupoUnitario grupoUnitario : gruposUni) {
+                prazo.setTime(grupoUnitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoUnitario.getQrdDiasNotificacao() + 1)));
+                if(dataAtual.after(prazo)){
+                    if(Session.getInstancia().getUsuarioLogado().equals(grupoUnitario.getCriador())
+                       && grupoUnitario.isFinalizado() == false){
+                        Session.getInstancia().getUsuarioLogado().setMensagem("Você precisa comprar mais " + grupoUnitario.getCategoria().getDescricao(),
+                                                                               grupoUnitario);
+
                     }
                 }
             }
