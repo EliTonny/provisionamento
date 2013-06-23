@@ -9,18 +9,19 @@ import javax.swing.JComboBox;
 import provisionamento.model.Categoria;
 import provisionamento.model.Grupo;
 
-public class FrameGrupo extends javax.swing.JFrame {
+public class FrameGrupoUnitario extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrameGrupo
+     * Creates new form FrameGrupoUnitario
      */
     private FrameCategoria frameCategoria;
-    public FrameGrupo() {
+    public FrameGrupoUnitario() {
+
         initComponents();
         frameCategoria = new FrameCategoria();
         
         List<Categoria> categorias = new ArrayList<Categoria>();
-        
+
         try {
             Dao<Categoria> dao = Factoring.getDaoCategoria();
             categorias = dao.busca();
@@ -235,13 +236,13 @@ public class FrameGrupo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -250,11 +251,12 @@ public class FrameGrupo extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGrupo().setVisible(true);
+                new FrameGrupoUnitario().setVisible(true);
+                
             }
         });
 
-    }
+    }     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddCategoria;

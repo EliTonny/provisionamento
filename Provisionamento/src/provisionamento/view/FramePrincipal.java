@@ -33,7 +33,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         lbUsuLogado.setText(lbUsuLogado.getText() + UsuarioLogado.getUsuarioLogado().getNome() + "!");
     }
     
-    private FrameGrupo frameGrupo;
+    private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
 
     /**
@@ -184,7 +184,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrupoActionPerformed
-        frameGrupo = new FrameGrupo();
+        frameGrupo = new FrameGrupoUnitario();
         frameGrupo.setVisible(true);
     }//GEN-LAST:event_btGrupoActionPerformed
 
