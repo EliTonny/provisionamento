@@ -114,6 +114,8 @@ public class FrameCategoria extends javax.swing.JFrame {
                 categoria.setDescricao(tfNome.getText());
                 Dao<Categoria> dao = Factoring.getDaoCategoria();
                 dao.grava(categoria);
+                tfNome.setText("");
+                JOptionPane.showMessageDialog(null, "Categoria cadastrada com sucesso!");
             } catch (DaoException ex) {
                 System.out.println(ex.getMessage());
             }
