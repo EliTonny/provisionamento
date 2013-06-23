@@ -225,6 +225,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
             ok = false;
             JOptionPane.showMessageDialog(null, "Prazo de validade deve ser um número!");
         }
+        
         if(tfQtdDias.getText().equals("")){
             qtdAntecip = 0;
         } else{
@@ -254,7 +255,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 tfQtdDias.setText(null);
                 tfQtdItens.setText(null);
             } catch (DaoException ex) {
-                Logger.getLogger(FrameGrupoUnitario.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
         
