@@ -451,7 +451,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         } else if (obj instanceof GrupoUnitario) {
 
             DefaultListModel<GrupoUnitario> modelGruposPessoais =
-                    (DefaultListModel<GrupoUnitario>) lsSeusGrupos.getModel();
+                    (DefaultListModel<GrupoUnitario>) lsGruposPessoais.getModel();
 
             GrupoUnitario grupoUnitario = (GrupoUnitario) obj;
             if (grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
