@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import provisionamento.model.Categoria;
-import provisionamento.model.Grupo;
+import provisionamento.model.GrupoUnitario;
 
 public class FrameGrupoUnitario extends javax.swing.JFrame {
 
@@ -198,7 +198,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
     private void btAddGrupoIndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoIndActionPerformed
         // TODO add your handling code here:
         
-        Grupo grupo = new Grupo() {};
+        GrupoUnitario grupo = new GrupoUnitario() {};
         
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
