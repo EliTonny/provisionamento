@@ -25,13 +25,13 @@ public class AvisaCompradores {
                 Dao<GrupoComunitario> dao = Factoring.getDaoGrupoComunitario();
                 List<GrupoComunitario> grupos = dao.busca();
                 Iterator it = grupos.iterator();
-                GrupoComunitario grupo;
-                Date dataAtual = new Date();
+                GrupoComunitario grupoComunitario;
+                Date dataAtual = new Date(); 
 
                 while(it.hasNext()){
-                    grupo = (GrupoComunitario) it.next();
-                    if(grupo.getPrazoValidade() == dataAtual){
-                        grupo.getComprador().getUsuario().setMensagem("Você precisa comprar mais " + grupo.getCategoria().getDescricao());
+                    grupoComunitario = (GrupoComunitario) it.next();
+                    if(grupoComunitario.getPrazoValidade() == dataAtual){
+                        grupoComunitario.getComprador().getUsuario().setMensagem("Você precisa comprar mais " + grupoComunitario.getCategoria().getDescricao());
                     }
                 }
                 avisou = true;
