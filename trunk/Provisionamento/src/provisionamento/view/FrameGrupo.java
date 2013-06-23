@@ -19,6 +19,19 @@ public class FrameGrupo extends javax.swing.JFrame {
         initComponents();
         frameCategoria = new FrameCategoria();
         
+        List<Categoria> categorias = new ArrayList<Categoria>();
+        
+        try {
+            Dao<Categoria> dao = Factoring.getDaoCategoria();
+            categorias = dao.busca();
+        } catch (DaoException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (Categoria cat: categorias){
+            cbCategoria.addItem(cat);
+        }
+        
     }
 
     /**
@@ -242,22 +255,7 @@ public class FrameGrupo extends javax.swing.JFrame {
         });
 
     }
-    public void ListaCategorias(){
-        
-        List<Categoria> categorias = new ArrayList<Categoria>();
-        
-        try {
-            Dao<Categoria> dao = Factoring.getDaoCategoria();
-            categorias = dao.busca();
-        } catch (DaoException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        for (Categoria cat: categorias){
-            cbCategoria.addItem(cat);
-        }
-        
-    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddCategoria;
     private javax.swing.JButton btAddGrupoInd;
