@@ -16,7 +16,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
      * Creates new form FrameGrupoUnitario
      */
     private FrameCategoria frameCategoria;
-
+    private boolean fechar;
     
     public FrameGrupoUnitario() {
 
@@ -35,6 +35,16 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
         ConcreteSubject.getInstancia().registerObserver(this);
+    }
+    
+    public FrameGrupoUnitario(GrupoUnitario grupo){
+        initComponents();
+        cbCategoria.removeAllItems();
+        cbCategoria.addItem(grupo.getCategoria());
+        cbCategoria.setEnabled(false);
+        btAddCategoria.setEnabled(false);
+        
+        this.fechar = true;
     }
 
     /**
@@ -270,6 +280,12 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 
                 ConcreteSubject.getInstancia().notifyObservers(grupoUnitario);
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                
+                if(this.fechar == true){
+                    ConcreteSubject.getInstancia().removeOberser(this);
+                    this.dispose();
+                }
+                
                 tfDataVencimento.setText(null);
                 tfQtdDias.setText(null);
                 tfQtdItens.setText(null);
