@@ -3,15 +3,12 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
-import provisionamento.model.GrupoComunitario;
 import provisionamento.model.GrupoUnitario;
 
 public class FrameGrupoUnitario extends javax.swing.JFrame {
