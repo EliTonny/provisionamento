@@ -120,10 +120,10 @@ public class FrameLogin extends javax.swing.JFrame{
             Usuario usuario = dao.busca(tfUsuario.getText());
             if (usuario != null) {
                 if (Arrays.equals(usuario.getSenha(), tfSenha.getPassword())) {
-                    AvisaCompradores.avisar();
                     tfUsuario.setText("");
                     tfSenha.setText("");
                     Session.getInstancia().setUsuarioLogado(usuario);
+                    AvisaCompradores.avisar();
                     new FramePrincipal().setVisible(true);
                     FacadeCarregaArquivos.Carrega();
                     this.dispose();
