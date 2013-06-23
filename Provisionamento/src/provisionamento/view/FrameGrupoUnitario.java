@@ -4,7 +4,10 @@ import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoUnitario;
@@ -15,22 +18,28 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
      * Creates new form FrameGrupoUnitario
      */
     private FrameCategoria frameCategoria;
+    List<Categoria> categorias = new ArrayList<Categoria>();
+    
     public FrameGrupoUnitario() {
 
         initComponents();
         frameCategoria = new FrameCategoria();
         
-        List<Categoria> categorias = new ArrayList<Categoria>();
-
         try {
-            Dao<Categoria> dao = Factoring.getDaoCategoria();
-            categorias = dao.busca();
+            cbCategoria.removeAllItems();
+            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
+            List<Categoria> categorias = daoCat.busca();
+            Iterator it = categorias.iterator();
+
+            while(it.hasNext()){
+                cbCategoria.addItem((Categoria) it.next());
+            }
+
+            for (Categoria cat: categorias){
+                cbCategoria.addItem(cat);
+            }
         } catch (DaoException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        for (Categoria cat: categorias){
-            cbCategoria.addItem(cat);
+            Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -197,8 +206,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
 
     private void btAddGrupoIndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoIndActionPerformed
         // TODO add your handling code here:
-        
-        GrupoUnitario grupo = new GrupoUnitario() {};
         
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
