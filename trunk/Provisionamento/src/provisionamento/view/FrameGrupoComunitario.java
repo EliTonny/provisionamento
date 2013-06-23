@@ -422,6 +422,8 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 tfQtdDias.setText("");
                 tfQtdItens.setText("");
                 
+                ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
+                
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 
             } catch (DaoException ex) {
