@@ -1,10 +1,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.ConcreteSubject;
-import Sistema.Dao;
-import Sistema.Factoring;
-import Sistema.Observer;
+import Sistema.*;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -247,6 +244,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setQrdDiasNotificacao(qtdAntecip);
                 grupoUnitario.setQuantidade(qtdItens);
                 grupoUnitario.setPrazoValidade(prazo);
+                grupoUnitario.setCriador(Session.getInstancia().getUsuarioLogado());
                 
                 dao.grava(grupoUnitario);
                 
