@@ -355,12 +355,13 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         Mensagem mensagem = (Mensagem) lsNotificacoes.getSelectedValue();
         if(mensagem.getGrupo() instanceof GrupoComunitario){
             frameGrupoComunitario = new FrameGrupoComunitario((GrupoComunitario) mensagem.getGrupo());
-            mensagem.getGrupo().setFinalizado(true);
-            listaMensagens.removeElement(mensagem);
             frameGrupoComunitario.setVisible(true);
         } else{
-            
+            frameGrupo = new FrameGrupoUnitario(mensagem.getGrupo());
+            frameGrupo.setVisible(true);
         }
+        mensagem.getGrupo().setFinalizado(true);
+        listaMensagens.removeElement(mensagem);
     }//GEN-LAST:event_btAtenderActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
