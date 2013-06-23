@@ -15,7 +15,7 @@ import provisionamento.model.Categoria;
  *
  * @author Lucas
  */
-public class FrameCategoria extends javax.swing.JFrame{
+public class FrameCategoria extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameCategoria
@@ -23,7 +23,7 @@ public class FrameCategoria extends javax.swing.JFrame{
     public FrameCategoria() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,10 +115,8 @@ public class FrameCategoria extends javax.swing.JFrame{
                 categoria.setDescricao(tfNome.getText());
                 Dao<Categoria> dao = Factoring.getDaoCategoria();
                 dao.grava(categoria);
-                tfNome.setText("");
-                
-                CategoriaSubject.getInstancia().notifyObservers();
-                
+                tfNome.setText("");                
+                CategoriaSubject.getInstancia().notifyObservers(categoria);
                 JOptionPane.showMessageDialog(null, "Categoria cadastrada com sucesso!");
             } catch (DaoException ex) {
                 System.out.println(ex.getMessage());
