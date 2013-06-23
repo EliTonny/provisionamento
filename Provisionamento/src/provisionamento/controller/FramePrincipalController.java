@@ -15,8 +15,10 @@ public class FramePrincipalController {
         Dao<GrupoComunitario> daoG = Factoring.getDaoGrupoComunitario();
         ArrayList<GrupoComunitario> grupos = new ArrayList<>();
         for (GrupoComunitario g : daoG.busca()) {
-            if (g.getCriador().equals(usu)) {
-                grupos.add(g);
+            if (!g.isPago()) {
+                if (g.getCriador().equals(usu)) {
+                    grupos.add(g);
+                }
             }
         }
         return grupos;
@@ -26,8 +28,10 @@ public class FramePrincipalController {
         Dao<GrupoUnitario> daoG = Factoring.getDaoGrupoUnitario();
         ArrayList<GrupoUnitario> grupos = new ArrayList<>();
         for (GrupoUnitario g : daoG.busca()) {
-            if (g.getCriador().equals(usu)) {
-                grupos.add(g);
+            if (!g.isFinalizado()) {
+                if (g.getCriador().equals(usu)) {
+                    grupos.add(g);
+                }
             }
         }
         return grupos;
@@ -37,10 +41,12 @@ public class FramePrincipalController {
         Dao<GrupoComunitario> daoG = Factoring.getDaoGrupoComunitario();
         ArrayList<GrupoComunitario> grupos = new ArrayList<>();
         for (GrupoComunitario g : daoG.busca()) {
-            for (Participante p : g.getParticipantes()) {
-                if (p.getUsuario().equals(usu)) {
-                    grupos.add(g);
-                    break;
+            if (!g.isPago()) {
+                for (Participante p : g.getParticipantes()) {
+                    if (p.getUsuario().equals(usu)) {
+                        grupos.add(g);
+                        break;
+                    }
                 }
             }
         }
