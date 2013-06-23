@@ -273,6 +273,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 tfDataVencimento.setText(null);
                 tfQtdDias.setText(null);
                 tfQtdItens.setText(null);
+                TxtValor.setText(null);
             } catch (DaoException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
