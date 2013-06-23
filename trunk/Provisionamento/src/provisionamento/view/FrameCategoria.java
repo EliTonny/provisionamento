@@ -5,7 +5,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.CategoriaSubject;
+import Sistema.ConcreteSubject;
 import Sistema.Dao;
 import Sistema.Factoring;
 import javax.swing.JOptionPane;
@@ -116,7 +116,7 @@ public class FrameCategoria extends javax.swing.JFrame {
                 Dao<Categoria> dao = Factoring.getDaoCategoria();
                 dao.grava(categoria);
                 tfNome.setText("");                
-                CategoriaSubject.getInstancia().notifyObservers(categoria);
+                ConcreteSubject.getInstancia().notifyObservers(categoria);
                 JOptionPane.showMessageDialog(null, "Categoria cadastrada com sucesso!");
             } catch (DaoException ex) {
                 System.out.println(ex.getMessage());

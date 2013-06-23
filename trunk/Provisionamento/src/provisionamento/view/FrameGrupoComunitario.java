@@ -54,7 +54,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         } catch (DaoException ex) {
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CategoriaSubject.getInstancia().registerObserver(this);
+        ConcreteSubject.getInstancia().registerObserver(this);
     }
     
     private FrameCategoria frameCategoria;
@@ -314,7 +314,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
-        CategoriaSubject.getInstancia().removeOberser(this);
+        ConcreteSubject.getInstancia().removeOberser(this);
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
 

@@ -4,24 +4,21 @@
  */
 package provisionamento.view;
 
-import Sistema.CategoriaSubject;
+import Sistema.Observer;
 import Sistema.Session;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramePrincipalController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Mensagem;
-import provisionamento.model.Usuario;
 
 /**
  *
  * @author Lucas
  */
-public class FramePrincipal extends javax.swing.JFrame {
+public class FramePrincipal extends javax.swing.JFrame implements Observer{
 
     /**
      * Creates new form FramePrincipal
@@ -343,4 +340,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JList lsSeusGrupos;
     private javax.swing.JTextArea taNotificacoes;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -11,18 +11,18 @@ import java.util.List;
  *
  * @author Eli T. de Souza
  */
-public class CategoriaSubject implements Subject{
+public class ConcreteSubject implements Subject{
     
     private List<Observer> observadores;
-    private static CategoriaSubject instancia;
+    private static ConcreteSubject instancia;
     
-    private CategoriaSubject(){
+    private ConcreteSubject(){
         observadores = new ArrayList();
     }
     
-    public static CategoriaSubject getInstancia(){
+    public static ConcreteSubject getInstancia(){
         if(instancia == null){
-            instancia = new CategoriaSubject();
+            instancia = new ConcreteSubject();
         }
         return instancia;
     }

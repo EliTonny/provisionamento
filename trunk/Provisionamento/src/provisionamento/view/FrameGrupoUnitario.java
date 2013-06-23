@@ -1,7 +1,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.CategoriaSubject;
+import Sistema.ConcreteSubject;
 import Sistema.Dao;
 import Sistema.Factoring;
 import Sistema.Observer;
@@ -37,7 +37,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         } catch (DaoException ex) {
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CategoriaSubject.getInstancia().registerObserver(this);
+        ConcreteSubject.getInstancia().registerObserver(this);
     }
 
     /**
@@ -261,7 +261,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
-        CategoriaSubject.getInstancia().removeOberser(this);
+        ConcreteSubject.getInstancia().removeOberser(this);
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
 
