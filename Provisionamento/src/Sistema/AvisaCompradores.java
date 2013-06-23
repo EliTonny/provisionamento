@@ -27,7 +27,7 @@ public class AvisaCompradores {
                 Iterator it = grupos.iterator();
                 GrupoComunitario grupoComunitario;
                 Date dataAtual = new Date(); 
-                Date prazo = null;
+                Date prazo = new Date();
 
                 while(it.hasNext()){
                     grupoComunitario = (GrupoComunitario) it.next();
