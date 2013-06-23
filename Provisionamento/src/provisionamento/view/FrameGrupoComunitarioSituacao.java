@@ -4,23 +4,19 @@ import javax.swing.table.DefaultTableModel;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 
-
 public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
 
-
     public FrameGrupoComunitarioSituacao(GrupoComunitario grupo) {
-        
+
         initComponents();
-        DefaultTableModel model = new DefaultTableModel(); 
-        this.TableGrupos.setModel(model);
-        
-        //model.addRow(grupo.getParticipantes().toArray());
-        
-        for(Participante participante : grupo.getParticipantes())
-        {
-            //model.addRow(new Object[]{participante.getUsuario().getNome(),
-            //                            participante.get});
+        DefaultTableModel model = (DefaultTableModel)this.TableGrupos.getModel();
+
+        for (Participante participante : grupo.getParticipantes()) {
+            model.addRow(new Object[]{participante.getUsuario().getNome(),
+                grupo.getValorCompra() / grupo.getParticipantes().size(),
+                participante.isPago()});
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -32,14 +28,10 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
 
         TableGrupos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Grupo Comunitário", "Valor", "Pago"
@@ -62,17 +54,35 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TableGrupos);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 11, 510, 310);
-
         jButton2.setText("Gravar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(10, 330, 65, 23);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -80,7 +90,6 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableGrupos;
     private javax.swing.JButton jButton2;
