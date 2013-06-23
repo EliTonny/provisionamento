@@ -3,7 +3,6 @@ package DaoArquivo;
 import MyExceptions.DaoException;
 import MyExceptions.DeletaDadosException;
 import MyExceptions.GravaDadosException;
-import Resources.Resources;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -26,11 +25,10 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable {
 
     public void grava(T object) throws GravaDadosException {
         try {
-            insereId(object);
-            T sobrescrito = this.dados.insere(object);
-            if (sobrescrito != null) {
-                throw new GravaDadosException("Item sobrescrito");
+            if (object.id == -1) {
+                insereId(object);
             }
+            this.dados.insere(object);
             this.dados.Persiste(arquivo);
         } catch (Exception ex) {
             throw new GravaDadosException(ex);
