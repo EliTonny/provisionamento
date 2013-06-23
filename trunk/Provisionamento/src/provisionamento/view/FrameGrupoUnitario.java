@@ -60,6 +60,8 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         tfQtdDias = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btFechar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        TxtValor = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -108,6 +110,15 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
             }
         });
 
+        jLabel4.setText("Valor:");
+
+        TxtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        TxtValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtValorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,9 +139,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -155,8 +163,14 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                                         .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel7))
-                                    .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(211, Short.MAX_VALUE))))
+                                    .addComponent(tfDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(211, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +197,11 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                     .addComponent(jLabel6)
                     .addComponent(tfQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(TxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAddGrupoInd)
                     .addComponent(btFechar))
@@ -245,6 +263,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setQrdDiasNotificacao(qtdAntecip);
                 grupoUnitario.setQuantidade(qtdItens);
                 grupoUnitario.setPrazoValidade(prazo);
+                grupoUnitario.setValorCompra(Double.parseDouble(TxtValor.getText().replace(',', '.')));
                 grupoUnitario.setCriador(Session.getInstancia().getUsuarioLogado());
                 
                 dao.grava(grupoUnitario);
@@ -274,6 +293,10 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     private void tfDataVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDataVencimentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfDataVencimentoActionPerformed
+
+    private void TxtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtValorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtValorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,6 +342,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     }     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField TxtValor;
     private javax.swing.JButton btAddCategoria;
     private javax.swing.JButton btAddGrupoInd;
     private javax.swing.JButton btFechar;
@@ -326,6 +350,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator1;
