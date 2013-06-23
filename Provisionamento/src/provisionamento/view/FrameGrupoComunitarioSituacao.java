@@ -18,8 +18,8 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
         
         for(Participante participante : grupo.getParticipantes())
         {
-            model.addRow(new Object[]{participante.getUsuario().getNome(),
-                                        participante.get});
+            //model.addRow(new Object[]{participante.getUsuario().getNome(),
+            //                            participante.get});
         }
     }
 
