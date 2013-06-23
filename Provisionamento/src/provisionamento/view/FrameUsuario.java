@@ -5,6 +5,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
+import Sistema.ConcreteSubject;
 import Sistema.Dao;
 import Sistema.Factoring;
 import Sistema.Observer;
@@ -16,7 +17,7 @@ import provisionamento.model.Usuario;
 
 /**
  *
- * @author Game Mania
+ * @author Eli T. de Souza
  */
 public class FrameUsuario extends javax.swing.JFrame {
 
@@ -168,6 +169,8 @@ public class FrameUsuario extends javax.swing.JFrame {
                 usuario.setEmail(tfEmail.getText());
                 usuario.setSenha(tfSenha.getPassword());
                 dao.grava(usuario);
+                
+                ConcreteSubject.getInstancia().notifyObservers(usuario);
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                 this.limpar();
             } catch (DaoException ex) {
