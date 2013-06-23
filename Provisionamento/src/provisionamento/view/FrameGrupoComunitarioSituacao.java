@@ -1,22 +1,29 @@
 package provisionamento.view;
 
+import MyExceptions.DaoException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import provisionamento.controller.FramGrupoComunitarioSituacaoController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 
 public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
 
+    private GrupoComunitario grupoComunitario;
+    private FramGrupoComunitarioSituacaoController controller;
+
     public FrameGrupoComunitarioSituacao(GrupoComunitario grupo) {
 
         initComponents();
-        DefaultTableModel model = (DefaultTableModel)this.TableGrupos.getModel();
+        controller = new FramGrupoComunitarioSituacaoController();
+        grupoComunitario = grupo;
 
-        for (Participante participante : grupo.getParticipantes()) {
+        DefaultTableModel model = (DefaultTableModel) this.TableGrupos.getModel();
+        for (Participante participante : grupoComunitario.getParticipantes()) {
             model.addRow(new Object[]{participante.getUsuario().getNome(),
-                grupo.getValorCompra() / grupo.getParticipantes().size(),
+                grupoComunitario.getValorCompra() / grupoComunitario.getParticipantes().size(),
                 participante.isPago()});
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -34,7 +41,7 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Grupo Comunitário", "Valor", "Pago"
+                "Usuario", "Valor", "Pago"
             }
         ) {
             Class[] types = new Class [] {
@@ -57,7 +64,7 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
         jButton2.setText("Gravar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btGrava(evt);
             }
         });
 
@@ -87,9 +94,17 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btGrava(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrava
+        try {
+            int cont = 0;
+            for (Participante p : grupoComunitario.getParticipantes()) {
+                boolean isPago = (boolean) this.TableGrupos.getValueAt(cont++, 2);
+                controller.AtualizarSituacaoParticipante(p, isPago);
+            }
+        } catch (DaoException ex) {
+            JOptionPane.showInputDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btGrava
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableGrupos;
     private javax.swing.JButton jButton2;

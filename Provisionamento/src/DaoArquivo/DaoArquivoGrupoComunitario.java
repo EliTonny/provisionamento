@@ -3,6 +3,7 @@ package DaoArquivo;
 import MyExceptions.DaoException;
 import MyExceptions.GravaDadosException;
 import Sistema.Dao;
+import java.util.Iterator;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
@@ -57,9 +58,16 @@ public class DaoArquivoGrupoComunitario extends DaoArquivo<GrupoComunitario> imp
             for (GrupoComunitario g : this.dados.buscaTodos()) {
                 u = DaoUsuario.busca(g.getCriador().getId());
                 g.setCriador(u);
-                for (Participante p : g.getParticipantes()) {
-                    p = DaoParticipante.busca(p.getId());
+
+                for (int i = 0; i < g.getParticipantes().size(); i++) {
+                    g.getParticipantes().set(i, DaoParticipante.busca(g.getParticipantes().get(i).getId()));
                 }
+
+                //assim não funciona
+                /*for (Participante p : g.getParticipantes()) {
+                 p = DaoParticipante.busca(p.getId());
+                 int i = 0;
+                 }*/
             }
         } catch (DaoException ex) {
             throw new DaoException("Erro ao atualizar as referencias.", ex);
