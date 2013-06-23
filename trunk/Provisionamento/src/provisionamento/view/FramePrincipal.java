@@ -364,8 +364,8 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
 
     @Override
     public void update(Object obj) {
-        GrupoComunitario grupoComunitario;
         if(obj instanceof GrupoComunitario){
+            GrupoComunitario grupoComunitario;
             grupoComunitario = (GrupoComunitario) obj;
             if(grupoComunitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())){
                 listaMeusGrupos.addElement(grupoComunitario);
@@ -375,6 +375,11 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
                 listaGruposParticipo.addElement(grupoComunitario);
             }
         } else if(obj instanceof GrupoUnitario){
+            GrupoUnitario grupoUnitario;
+            grupoUnitario = (GrupoUnitario) obj;
+            if(grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())){
+                listaMeusGrupos.addElement(grupoUnitario);
+            }
         }
     }
 }
