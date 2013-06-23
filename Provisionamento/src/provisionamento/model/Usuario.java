@@ -48,8 +48,8 @@ public class Usuario extends ModeloBase {
         this.senha = senha;
     }
     
-    public void setMensagem(String mensagem){
-        Mensagem novaMsg = new Mensagem(mensagem);
+    public void setMensagem(String mensagem, GrupoUnitario grupo){
+        Mensagem novaMsg = new Mensagem(mensagem, grupo);
         this.mensagens.add(novaMsg);
     }
     
