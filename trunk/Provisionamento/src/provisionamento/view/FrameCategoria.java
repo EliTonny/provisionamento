@@ -7,6 +7,7 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
+import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
 
 /**
@@ -34,7 +35,7 @@ public class FrameCategoria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfNome = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btFechar = new javax.swing.JButton();
 
@@ -78,7 +79,7 @@ public class FrameCategoria extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btFechar))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -92,7 +93,7 @@ public class FrameCategoria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -104,14 +105,18 @@ public class FrameCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        try {
-            Categoria categoria = new Categoria();
-            categoria.setDescricao(jTextField1.getText());
-            Dao<Categoria> dao = Factoring.getDaoCategoria();
-            dao.grava(categoria);
-        } catch (DaoException ex) {
-            System.out.println(ex.getMessage());
+        
+        if(tfNome.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Nome deve ser informado!");
+        } else {
+            try {
+                Categoria categoria = new Categoria();
+                categoria.setDescricao(tfNome.getText());
+                Dao<Categoria> dao = Factoring.getDaoCategoria();
+                dao.grava(categoria);
+            } catch (DaoException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -160,6 +165,6 @@ public class FrameCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

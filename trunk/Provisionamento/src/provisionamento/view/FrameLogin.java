@@ -10,6 +10,7 @@ import Sistema.Dao;
 import Sistema.Factoring;
 import Sistema.UsuarioLogado;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,9 +27,20 @@ public class FrameLogin extends javax.swing.JFrame {
      */
     public FrameLogin() {
         initComponents();
+        try {
+            Dao<Usuario> dao = Factoring.getDaoUsuario();
+            List usuarios = dao.busca();
+            if(usuarios.isEmpty()){
+                frameUsu = new FrameUsuario();
+                frameUsu.setVisible(true);
+            }
+        } catch (DaoException ex) {
+            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private FramePrincipal framePri;
+    private FrameUsuario frameUsu;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,9 +136,11 @@ public class FrameLogin extends javax.swing.JFrame {
             Dao<Usuario> dao = Factoring.getDaoUsuario();
             Usuario usuario = dao.busca(tfUsuario.getText());
             if(usuario != null){
-                if(Arrays.equals(usuario.getSenha().toCharArray(),tfSenha.getPassword())){
+                if(Arrays.equals(usuario.getSenha(),tfSenha.getPassword())){
                     UsuarioLogado.setUsuarioLogado(usuario);
                     AvisaCompradores.avisar();
+                    tfUsuario.setText("");
+                    tfSenha.setText("");                   
                     framePri = new FramePrincipal();
                     framePri.setVisible(true);
                 } else{
