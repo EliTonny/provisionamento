@@ -35,20 +35,12 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         try {
             Dao<Categoria> daoCat = Factoring.getDaoCategoria();
             List<Categoria> categorias = daoCat.busca();
-            Iterator it = categorias.iterator();
-
-            while (it.hasNext()) {
-                cbCategoria.addItem((Categoria) it.next());
+            
+            for (Categoria categoria : categorias) {
+                cbCategoria.addItem(categoria);
             }
-
-            Dao<Usuario> daoUsu = Factoring.getDaoUsuario();
-            List<Usuario> usuarios = daoUsu.busca();
-            it = usuarios.iterator();
-            while (it.hasNext()) {
-                listaUsuarios.addElement((Usuario) it.next());
-            }
-
-            listaUsuarios.removeElement(Session.getInstancia().getUsuarioLogado());
+            
+            this.iniListaUsuario();
             lsMembrosRepublica.setModel(listaUsuarios);
 
         } catch (DaoException ex) {
@@ -433,6 +425,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 tfQtdItens.setText("");
                 
                 ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
+                this.iniListaUsuario();
                 
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 
@@ -514,6 +507,23 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     public void update(Object obj) {
         if (obj instanceof Categoria) {
             cbCategoria.addItem((Categoria) obj);
+        } else if(obj instanceof Usuario){
+            listaUsuarios.addElement((Usuario) obj);
+        }
+    }
+    
+    private void iniListaUsuario(){
+        Dao<Usuario> daoUsu;
+        try {
+            daoUsu = Factoring.getDaoUsuario();
+            List<Usuario> usuarios = daoUsu.busca();
+            listaUsuarios.removeAllElements();
+            for (Usuario usuario : usuarios) {
+                listaUsuarios.addElement(usuario);
+            }
+            listaUsuarios.removeElement(Session.getInstancia().getUsuarioLogado());
+        } catch (DaoException ex) {
+            Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
