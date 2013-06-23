@@ -13,15 +13,7 @@ public class GrupoUnitario  extends ModeloBase{
     private Usuario criador;
     private Date dataCriacao;
     private boolean finalizado;
-    private boolean pago;
 
-    public boolean isPago() {
-        return pago;
-    }
-
-    public void setPago(boolean pago) {
-        this.pago = pago;
-    }
     private double valorCompra;
 
     public double getValorCompra() {
