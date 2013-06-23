@@ -7,6 +7,7 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
+import Sistema.Observer;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,7 @@ public class FrameUsuario extends javax.swing.JFrame {
         tfSenha = new javax.swing.JPasswordField();
         tfConSenha = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbNovoUsuario.setText("Novo Usuario");
 

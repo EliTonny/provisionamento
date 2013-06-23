@@ -7,7 +7,7 @@ package provisionamento.view;
 import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
-import Sistema.UsuarioLogado;
+import Sistema.Session;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
@@ -32,7 +32,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
      */
     public FrameGrupoComunitario() {
         initComponents();
-        tfCriador.setText(UsuarioLogado.getUsuarioLogado().getNome());
+        tfCriador.setText(Session.getInstancia().getUsuarioLogado().getNome());
         cbCategoria.removeAllItems();
         lsParticipantesGrupo.setModel(listaParticipantes);
         try {
@@ -51,7 +51,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                 listaUsuarios.addElement((Usuario) it.next());
             }
             
-            listaUsuarios.removeElement(UsuarioLogado.getUsuarioLogado());
+            listaUsuarios.removeElement(Session.getInstancia().getUsuarioLogado());
             lsMembrosRepublica.setModel(listaUsuarios);
             
         } catch (DaoException ex) {
@@ -375,7 +375,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         if(ok == true){
             prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
             GrupoComunitario grupoComunitario = new GrupoComunitario();
-            grupoComunitario.setCriador(UsuarioLogado.getUsuarioLogado());
+            grupoComunitario.setCriador(Session.getInstancia().getUsuarioLogado());
             grupoComunitario.setQuantidade(qtdItens);
             grupoComunitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
             grupoComunitario.addComprador();
@@ -386,7 +386,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                 Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
                 Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
                 participante = new Participante();
-                participante.setUsuario(UsuarioLogado.getUsuarioLogado());
+                participante.setUsuario(Session.getInstancia().getUsuarioLogado());
                 daoParticipante.grava(participante);
                 grupoComunitario.addParticipante(participante);
                 

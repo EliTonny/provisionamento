@@ -4,9 +4,14 @@
  */
 package provisionamento.view;
 
-import Sistema.UsuarioLogado;
+import Sistema.Session;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import provisionamento.controller.FramePrincipalController;
+import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Mensagem;
 
 /**
@@ -18,21 +23,36 @@ public class FramePrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FramePrincipal
      */
+    FramePrincipalController controller;
+
     public FramePrincipal() {
-        initComponents();
-        
-        List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
-        Iterator it = mensagens.iterator();
-        Mensagem mensagem;
-        while(it.hasNext()){
-            mensagem = (Mensagem) it.next();
-            taNotificacoes.setText(taNotificacoes.getText() + 
-                                   "\n" + mensagem.getMensagem());
+        try {
+            initComponents();
+            controller = new FramePrincipalController();
+
+            List<Mensagem> mensagens = Session.getInstancia().getUsuarioLogado().getMensagens();
+            Iterator it = mensagens.iterator();
+            Mensagem mensagem;
+            while (it.hasNext()) {
+                mensagem = (Mensagem) it.next();
+                taNotificacoes.setText(taNotificacoes.getText()
+                        + "\n" + mensagem.getMensagem());
+            }
+
+            lbUsuLogado.setText(lbUsuLogado.getText() + Session.getInstancia().getUsuarioLogado().getNome() + "!");
+
+            ArrayList<GrupoComunitario> grupo =
+                    controller.getGruposUsuario(
+                    Session.getInstancia().getUsuarioLogado());
+            
+            lsGruposComunParticipa.setListData(grupo.toArray());
+            
+            
+            
+        } catch (Exception ex) {
+            JOptionPane.showInputDialog(ex.getMessage());
         }
-        
-        lbUsuLogado.setText(lbUsuLogado.getText() + UsuarioLogado.getUsuarioLogado().getNome() + "!");
     }
-    
     private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
 
@@ -66,8 +86,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        BtAddUsuario = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Sistema de Provisionamento");
@@ -119,6 +138,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jButton1.setText("Gerar");
 
+        BtAddUsuario.setText("Adicionar Usuarios");
+        BtAddUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtAddUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,12 +195,12 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addGap(10, 10, 10)))
+                            .addComponent(jRadioButton1))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btGrupo)
+                        .addGap(90, 90, 90)
+                        .addComponent(BtAddUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btGrupoComunitario)
                         .addGap(33, 33, 33))))
@@ -207,7 +233,8 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btGrupo)
-                    .addComponent(btGrupoComunitario))
+                    .addComponent(btGrupoComunitario)
+                    .addComponent(BtAddUsuario))
                 .addGap(31, 31, 31)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -233,9 +260,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btGrupoComunitarioActionPerformed
 
     private void btLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogoutActionPerformed
-        UsuarioLogado.setUsuarioLogado(null);
+        Session.getInstancia().setUsuarioLogado(null);
+        new FrameLogin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btLogoutActionPerformed
+
+    private void BtAddUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAddUsuarioActionPerformed
+        new FrameUsuario().setVisible(true);
+    }//GEN-LAST:event_BtAddUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,6 +304,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtAddUsuario;
     private javax.swing.JButton btGrupo;
     private javax.swing.JButton btGrupoComunitario;
     private javax.swing.JButton btLogout;

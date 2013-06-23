@@ -14,7 +14,7 @@ import provisionamento.model.Categoria;
  *
  * @author Lucas
  */
-public class FrameCategoria extends javax.swing.JFrame {
+public class FrameCategoria extends javax.swing.JFrame{
 
     /**
      * Creates new form FrameCategoria
@@ -39,7 +39,7 @@ public class FrameCategoria extends javax.swing.JFrame {
         btAddCategoria = new javax.swing.JButton();
         btFechar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nova Categoria");
 
@@ -169,4 +169,5 @@ public class FrameCategoria extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
+
 }

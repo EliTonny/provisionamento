@@ -4,13 +4,13 @@
  */
 package provisionamento.view;
 
+import Sistema.Session;
 import MyExceptions.DaoException;
 import Sistema.AvisaCompradores;
 import Sistema.Dao;
+import Sistema.FacadeCarregaArquivos;
 import Sistema.Factoring;
-import Sistema.UsuarioLogado;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,25 +20,14 @@ import provisionamento.model.Usuario;
  *
  * @author Lucas
  */
-public class FrameLogin extends javax.swing.JFrame {
+public class FrameLogin extends javax.swing.JFrame{
 
     /**
      * Creates new form FrameLogin
      */
     public FrameLogin() {
         initComponents();
-        try {
-            Dao<Usuario> dao = Factoring.getDaoUsuario();
-            List usuarios = dao.busca();
-            if(usuarios.isEmpty()){
-                frameUsu = new FrameUsuario();
-                frameUsu.setVisible(true);
-            }
-        } catch (DaoException ex) {
-            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-    
     private FramePrincipal framePri;
     private FrameUsuario frameUsu;
 
@@ -135,18 +124,19 @@ public class FrameLogin extends javax.swing.JFrame {
         try {
             Dao<Usuario> dao = Factoring.getDaoUsuario();
             Usuario usuario = dao.busca(tfUsuario.getText());
-            if(usuario != null){
-                if(Arrays.equals(usuario.getSenha(),tfSenha.getPassword())){
-                    UsuarioLogado.setUsuarioLogado(usuario);
+            if (usuario != null) {
+                if (Arrays.equals(usuario.getSenha(), tfSenha.getPassword())) {
                     AvisaCompradores.avisar();
                     tfUsuario.setText("");
-                    tfSenha.setText("");                   
-                    framePri = new FramePrincipal();
-                    framePri.setVisible(true);
-                } else{
+                    tfSenha.setText("");
+                    Session.getInstancia().setUsuarioLogado(usuario);
+                    new FramePrincipal().setVisible(true);
+                    FacadeCarregaArquivos.Carrega();
+                    this.dispose();
+                } else {
                     JOptionPane.showMessageDialog(null, "Senha incorreta!");
                 }
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
             }
         } catch (DaoException ex) {
@@ -198,4 +188,5 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField tfSenha;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
+
 }

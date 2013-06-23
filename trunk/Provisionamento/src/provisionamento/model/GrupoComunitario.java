@@ -1,11 +1,13 @@
 package provisionamento.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GrupoComunitario extends GrupoUnitario{
         
     private List<Participante> participantes;
+    private Date dataCriacao;
 
     public List<Participante> getParticipantes() {
         return participantes;
@@ -14,6 +16,7 @@ public class GrupoComunitario extends GrupoUnitario{
     
     public GrupoComunitario(){
         participantes = new ArrayList<>();
+        dataCriacao = new Date();
     }
     
     public void addParticipante(Participante participante){
@@ -38,5 +41,11 @@ public class GrupoComunitario extends GrupoUnitario{
     
     public Participante getComprador(){
         return this.participantes.get(comprador);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return this.getCategoria().getDescricao() + this.dataCriacao.toString();
     }
 }
