@@ -31,7 +31,7 @@ public class AvisaCompradores {
 
                 while(it.hasNext()){
                     grupoComunitario = (GrupoComunitario) it.next();
-                    prazo.setTime(grupoComunitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoComunitario.getQtd_dias_notificacao() + 1)));
+                    prazo.setTime(grupoComunitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoComunitario.getQrdDiasNotificacao() + 1)));
                     if(dataAtual.after(prazo)){
                         grupoComunitario.getComprador().getUsuario().setMensagem("Você precisa comprar mais " + grupoComunitario.getCategoria().getDescricao());
                     }
