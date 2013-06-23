@@ -14,8 +14,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramePrincipalController;
 import provisionamento.model.GrupoComunitario;
+import provisionamento.model.GrupoUnitario;
 import provisionamento.model.Mensagem;
-import provisionamento.model.Usuario;
 
 /**
  *
@@ -52,12 +52,18 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
                     controller.getGruposCriador(
                     Session.getInstancia().getUsuarioLogado());
             
+            ArrayList<GrupoUnitario> grupoCriadorUni = controller.getGruposCriadorUni(Session.getInstancia().getUsuarioLogado());
+            
             for (GrupoComunitario grupoComunitario : grupoCriador) {
                 listaMeusGrupos.addElement(grupoComunitario);
             }
             
             for (GrupoComunitario grupoComunitario : grupoParticipante) {
                 listaGruposParticipo.addElement(grupoComunitario);
+            }
+            
+            for (GrupoUnitario grupoUnitario : grupoCriadorUni) {
+                listaMeusGrupos.addElement(grupoUnitario);
             }
 
             lsGruposComunParticipa.setModel(listaGruposParticipo);
@@ -368,6 +374,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
             if(grupoComunitario.getParticipantes().contains(grupoComunitario)){
                 listaGruposParticipo.addElement(grupoComunitario);
             }
+        } else if(obj instanceof GrupoUnitario){
         }
     }
 }

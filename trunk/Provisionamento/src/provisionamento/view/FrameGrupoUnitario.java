@@ -249,6 +249,8 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setPrazoValidade(prazo);
                 
                 dao.grava(grupoUnitario);
+                
+                ConcreteSubject.getInstancia().notifyObservers(grupoUnitario);
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 tfDataVencimento.setText(null);
                 tfQtdDias.setText(null);

@@ -5,6 +5,7 @@ import Sistema.Dao;
 import Sistema.Factoring;
 import java.util.ArrayList;
 import provisionamento.model.GrupoComunitario;
+import provisionamento.model.GrupoUnitario;
 import provisionamento.model.Usuario;
 
 public class FramePrincipalController {
@@ -13,6 +14,17 @@ public class FramePrincipalController {
         Dao<GrupoComunitario> daoG = Factoring.getDaoGrupoComunitario();
         ArrayList<GrupoComunitario> grupos = new ArrayList<>();
         for (GrupoComunitario g : daoG.busca()) {
+            if (g.getCriador().equals(usu)) {
+                grupos.add(g);
+            }
+        }
+        return grupos;
+    }
+    
+    public ArrayList<GrupoUnitario> getGruposCriadorUni(Usuario usu) throws DaoException {
+        Dao<GrupoUnitario> daoG = Factoring.getDaoGrupoUnitario();
+        ArrayList<GrupoUnitario> grupos = new ArrayList<>();
+        for (GrupoUnitario g : daoG.busca()) {
             if (g.getCriador().equals(usu)) {
                 grupos.add(g);
             }
