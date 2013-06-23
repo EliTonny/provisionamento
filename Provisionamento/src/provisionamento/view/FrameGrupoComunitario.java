@@ -44,12 +44,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
             Dao<Usuario> daoUsu = Factoring.getDaoUsuario();
             List<Usuario> usuarios = daoUsu.busca();
             it = usuarios.iterator();
-            DefaultListModel<Usuario> lista = new DefaultListModel();
             while(it.hasNext()){
-                lista.addElement((Usuario) it.next());
+                listaUsuarios.addElement((Usuario) it.next());
             }
             
-            lsMembrosRepublica.setModel(lista);
+            lsMembrosRepublica.setModel(listaUsuarios);
             
         } catch (DaoException ex) {
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,7 +56,8 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
     }
     
     private FrameCategoria frameCategoria;
-    private DefaultListModel<Participante> listaParticipantes = new DefaultListModel<>();
+    private DefaultListModel<Usuario> listaParticipantes = new DefaultListModel<>();
+    private DefaultListModel<Usuario> listaUsuarios  = new DefaultListModel();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,20 +299,22 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
     private void btPraLaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPraLaActionPerformed
         List<Usuario> usariosSelecionados = lsMembrosRepublica.getSelectedValuesList();
         Iterator itUsuSel = usariosSelecionados.iterator();
+        Usuario usuario;
         while(itUsuSel.hasNext()){
-            Participante participante = new Participante();
-            participante.setUsuario((Usuario) itUsuSel.next());
-            
-            listaParticipantes.addElement(participante);
+            usuario = (Usuario) itUsuSel.next();            
+            listaParticipantes.addElement(usuario);
+            listaUsuarios.removeElement(usuario);
         }
     }//GEN-LAST:event_btPraLaActionPerformed
 
     private void btPraCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPraCaActionPerformed
-        List<Participante> participantesSelecionados = lsParticipantesGrupo.getSelectedValuesList();
+        List<Usuario> participantesSelecionados = lsParticipantesGrupo.getSelectedValuesList();
         Iterator itParSel = participantesSelecionados.iterator();
-        
+        Usuario usuario;
         while(itParSel.hasNext()){
-            listaParticipantes.removeElement((Participante) itParSel.next());
+            usuario = (Usuario) itParSel.next();            
+            listaUsuarios.addElement(usuario);
+            listaParticipantes.removeElement(usuario);
         }
     }//GEN-LAST:event_btPraCaActionPerformed
 
