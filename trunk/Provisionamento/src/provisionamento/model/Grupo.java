@@ -8,7 +8,7 @@ public abstract class Grupo  extends ModeloBase{
     private String descricao;
     private Date prazoValidade;
     private int quantidade;
-    private int qtd_dias_notificacao;
+    private int QrdDiasNotificacao;
 
     public Categoria getCategoria() {
         return categoria;
@@ -47,11 +47,11 @@ public abstract class Grupo  extends ModeloBase{
         this.id = -1;
     }
 
-    public int getQtd_dias_notificacao() {
-        return qtd_dias_notificacao;
+    public int getQrdDiasNotificacao() {
+        return QrdDiasNotificacao;
     }
 
-    public void setQtd_dias_notificacao(int qtd_dias_notificacao) {
-        this.qtd_dias_notificacao = qtd_dias_notificacao;
+    public void setQrdDiasNotificacao(int QrdDiasNotificacao) {
+        this.QrdDiasNotificacao = QrdDiasNotificacao;
     }
 }
