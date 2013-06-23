@@ -4,13 +4,19 @@
  */
 package provisionamento.view;
 
+import PDF.MeusDevedoresReport;
+import PDF.MinhasDividasReport;
 import Sistema.ConcreteSubject;
 import Sistema.Observer;
 import Sistema.Session;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramePrincipalController;
 import provisionamento.model.GrupoComunitario;
@@ -87,6 +93,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     }
     private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
+    private JFileChooser SeletorPDF;  
     private DefaultListModel<Mensagem> listaMensagens = new DefaultListModel<>();
 
     /**
@@ -114,9 +121,8 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         btGrupoComunitario = new javax.swing.JButton();
         btLogout = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        rbMinhasDividasReport = new javax.swing.JRadioButton();
+        rbMeusDevedoresReporr = new javax.swing.JRadioButton();
         BtAddUsuario = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         lsGruposPessoais = new javax.swing.JList();
@@ -125,6 +131,10 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         lsNotificacoes = new javax.swing.JList();
         btAtender = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        tfCaminhoReport = new javax.swing.JTextField();
+        btBrowseReport = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,13 +181,11 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
         jLabel3.setText("Relatórios");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Relatórios das Minha Dívidas");
+        buttonGroup1.add(rbMinhasDividasReport);
+        rbMinhasDividasReport.setText("Relatórios das Minha Dívidas");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Relatórios de Meus Devedores");
-
-        jButton1.setText("Gerar");
+        buttonGroup1.add(rbMeusDevedoresReporr);
+        rbMeusDevedoresReporr.setText("Relatórios de Meus Devedores");
 
         BtAddUsuario.setText("Cadastrar Usuario");
         BtAddUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -207,12 +215,50 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
             }
         });
 
+        jLabel7.setText("Salvar em:");
+
+        tfCaminhoReport.setEditable(false);
+
+        btBrowseReport.setText("Browse...");
+        btBrowseReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBrowseReportActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Gerar Relatorio");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addComponent(jSeparator2)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(btGrupoComunitario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbMeusDevedoresReporr)
+                            .addComponent(rbMinhasDividasReport)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfCaminhoReport, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btBrowseReport))
+                            .addComponent(jButton3))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,30 +291,14 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbUsuLogado)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(btGrupoComunitario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(502, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btAtender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(btAtender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 7, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,12 +345,17 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(rbMinhasDividasReport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(rbMeusDevedoresReporr)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(tfCaminhoReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBrowseReport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jButton3)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -371,6 +406,59 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         ConcreteSubject.getInstancia().notifyObservers(mensagem.getGrupo());
     }//GEN-LAST:event_btRemoverActionPerformed
 
+    private void btBrowseReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBrowseReportActionPerformed
+        String nomeCompleto;
+        
+        SeletorPDF = new javax.swing.JFileChooser();
+        SeletorPDF.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        SeletorPDF.setApproveButtonText("OK");
+        SeletorPDF.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        SeletorPDF.setCurrentDirectory(new java.io.File("C:\\"));
+        
+        int i= SeletorPDF.showSaveDialog(null);
+        
+        if (i==1){
+           tfCaminhoReport.setText("");
+        } else {
+            File arquivo = SeletorPDF.getSelectedFile();
+            nomeCompleto = arquivo.getName();
+
+            if(!(nomeCompleto.contains(".")))
+                tfCaminhoReport.setText(arquivo.getPath() + ".pdf");
+            else
+                tfCaminhoReport.setText(arquivo.getPath());
+        }
+        
+        SeletorPDF.setVisible(true);
+
+    }//GEN-LAST:event_btBrowseReportActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String extensao;  
+        String nomeArqu;
+
+        if(!(tfCaminhoReport.getText().equals(""))){ 
+            nomeArqu = tfCaminhoReport.getText();
+            extensao = nomeArqu.substring(nomeArqu.lastIndexOf("."), nomeArqu.length());
+            
+            if (!(extensao.equals(".pdf"))){
+                    JOptionPane.showMessageDialog(null, "Extensão Incorreta.");
+            } else {
+                    try {
+                        if(rbMinhasDividasReport.isSelected()){
+                            MinhasDividasReport mdr = new MinhasDividasReport(tfCaminhoReport.getText());
+                        }
+                        if(rbMeusDevedoresReporr.isSelected()){
+                            MeusDevedoresReport mder = new MeusDevedoresReport(tfCaminhoReport.getText());
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -408,20 +496,20 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtAddUsuario;
     private javax.swing.JButton btAtender;
+    private javax.swing.JButton btBrowseReport;
     private javax.swing.JButton btGrupo;
     private javax.swing.JButton btGrupoComunitario;
     private javax.swing.JButton btLogout;
     private javax.swing.JButton btRemover;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -433,6 +521,9 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     private javax.swing.JList lsGruposPessoais;
     private javax.swing.JList lsNotificacoes;
     private javax.swing.JList lsSeusGrupos;
+    private javax.swing.JRadioButton rbMeusDevedoresReporr;
+    private javax.swing.JRadioButton rbMinhasDividasReport;
+    private javax.swing.JTextField tfCaminhoReport;
     // End of variables declaration//GEN-END:variables
 
     @Override
