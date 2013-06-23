@@ -21,16 +21,20 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         
-        List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
+        /*List<Mensagem> mensagens = UsuarioLogado.getUsuarioLogado().getMensagens();
         Iterator it = mensagens.iterator();
         Mensagem mensagem;
         while(it.hasNext()){
             mensagem = (Mensagem) it.next();
             taNotificacoes.setText(taNotificacoes.getText() + 
                                    "\n" + mensagem.getMensagem());
-        }
+        }*/
         
+        //lbUsuLogado.setText(lbUsuLogado.getText() + UsuarioLogado.getUsuarioLogado().getNome() + "!");
     }
+    
+    private FrameGrupo frameGrupo;
+    private FrameGrupoComunitario frameGrupoComunitario;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,17 +50,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taNotificacoes = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
+        lbUsuLogado = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        btGrupo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btGrupoComunitario = new javax.swing.JButton();
+        btLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,9 +73,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         taNotificacoes.setRows(5);
         jScrollPane1.setViewportView(taNotificacoes);
 
-        jLabel3.setText("Bom vê-lo novamente por aqui, (UserName).");
+        lbUsuLogado.setText("Bom vê-lo novamente por aqui, ");
 
-        jButton1.setText("Adicionar Novo Grupo");
+        btGrupo.setText("Adicionar Novo Grupo");
+        btGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGrupoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Seus Grupos");
 
@@ -81,9 +90,19 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jList2);
 
-        jButton2.setText("Adicionar Novo Grupo Comunitário");
+        btGrupoComunitario.setText("Adicionar Novo Grupo Comunitário");
+        btGrupoComunitario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGrupoComunitarioActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Logout");
+        btLogout.setText("Logout");
+        btLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,9 +112,9 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jButton1)
+                .addComponent(btGrupo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btGrupoComunitario)
                 .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -109,13 +128,13 @@ public class FramePrincipal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(170, 170, 170)
-                                .addComponent(jButton3)
+                                .addComponent(btLogout)
                                 .addGap(30, 30, 30))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(346, 346, 346))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lbUsuLogado)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -135,11 +154,11 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(jButton3))
+                    .addComponent(btLogout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(lbUsuLogado)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -156,13 +175,28 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btGrupo)
+                    .addComponent(btGrupoComunitario))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrupoActionPerformed
+        frameGrupo = new FrameGrupo();
+        frameGrupo.setVisible(true);
+    }//GEN-LAST:event_btGrupoActionPerformed
+
+    private void btGrupoComunitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGrupoComunitarioActionPerformed
+        frameGrupoComunitario = new FrameGrupoComunitario();
+        frameGrupoComunitario.setVisible(true);
+    }//GEN-LAST:event_btGrupoComunitarioActionPerformed
+
+    private void btLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogoutActionPerformed
+        UsuarioLogado.setUsuarioLogado(null);
+        this.dispose();
+    }//GEN-LAST:event_btLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,12 +233,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btGrupo;
+    private javax.swing.JButton btGrupoComunitario;
+    private javax.swing.JButton btLogout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JList jList1;
@@ -214,6 +247,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lbUsuLogado;
     private javax.swing.JTextArea taNotificacoes;
     // End of variables declaration//GEN-END:variables
 }
