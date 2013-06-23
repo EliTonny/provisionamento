@@ -9,11 +9,13 @@ import Sistema.Session;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramePrincipalController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Mensagem;
+import provisionamento.model.Usuario;
 
 /**
  *
@@ -42,16 +44,19 @@ public class FramePrincipal extends javax.swing.JFrame {
 
             lbUsuLogado.setText(lbUsuLogado.getText() + Session.getInstancia().getUsuarioLogado().getNome() + "!");
 
-            ArrayList<GrupoComunitario> grupo =
-                    controller.getGruposUsuario(
+            ArrayList<GrupoComunitario> grupoParticipante =
+                    controller.getGruposParticipante(
                     Session.getInstancia().getUsuarioLogado());
-            
-            lsGruposComunParticipa.setListData(grupo.toArray());
-            
-            
-            
+
+            ArrayList<GrupoComunitario> grupoCriador =
+                    controller.getGruposCriador(
+                    Session.getInstancia().getUsuarioLogado());
+
+            lsGruposComunParticipa.setListData(grupoParticipante.toArray());
+            lsSeusGrupos.setListData(grupoCriador.toArray());
+
         } catch (Exception ex) {
-            JOptionPane.showInputDialog(ex.getMessage());
+            JOptionPane.showMessageDialog(this,ex.getMessage());
         }
     }
     private FrameGrupoUnitario frameGrupo;
@@ -109,6 +114,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel4.setText("Seus Grupos");
 
+        lsSeusGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lsSeusGruposMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(lsSeusGrupos);
 
         jLabel5.setText("Grupos em que você está");
@@ -269,6 +279,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void BtAddUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAddUsuarioActionPerformed
         new FrameUsuario().setVisible(true);
     }//GEN-LAST:event_BtAddUsuarioActionPerformed
+
+    private void lsSeusGruposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lsSeusGruposMouseClicked
+        GrupoComunitario com = (GrupoComunitario)lsSeusGrupos.getSelectedValue();
+        new FrameGrupoComunitarioSituacao(com).setVisible(true);
+    }//GEN-LAST:event_lsSeusGruposMouseClicked
 
     /**
      * @param args the command line arguments

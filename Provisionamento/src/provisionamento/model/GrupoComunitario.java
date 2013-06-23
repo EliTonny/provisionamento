@@ -9,6 +9,15 @@ public class GrupoComunitario extends GrupoUnitario{
     private List<Participante> participantes;
     private Date dataCriacao;
     private int comprador;
+    private double valorCompra;
+
+    public double getValorCompra() {
+        return valorCompra;
+    }
+
+    public void setValorCompra(double valorCompra) {
+        this.valorCompra = valorCompra;
+    }
 
     public List<Participante> getParticipantes() {
         return participantes;

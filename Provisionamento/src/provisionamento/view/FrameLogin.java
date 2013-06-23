@@ -136,7 +136,7 @@ public class FrameLogin extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
             }
         } catch (DaoException ex) {
-            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btLoginActionPerformed
 
