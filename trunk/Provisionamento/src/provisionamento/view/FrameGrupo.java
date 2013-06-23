@@ -14,21 +14,11 @@ public class FrameGrupo extends javax.swing.JFrame {
     /**
      * Creates new form FrameGrupo
      */
+    private FrameCategoria frameCategoria;
     public FrameGrupo() {
         initComponents();
+        frameCategoria = new FrameCategoria();
         
-        List<Categoria> categorias = new ArrayList<Categoria>();
-        
-        try {
-            Dao<Categoria> dao = Factoring.getDaoCategoria();
-            categorias = dao.busca();
-        } catch (DaoException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        for (Categoria cat: categorias){
-            cbCategoria.addItem(cat);
-        }
     }
 
     /**
@@ -59,7 +49,6 @@ public class FrameGrupo extends javax.swing.JFrame {
 
         labelCategoria.setText("Categoria:");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCategoriaActionPerformed(evt);
@@ -71,10 +60,20 @@ public class FrameGrupo extends javax.swing.JFrame {
         jLabel2.setText("Quantidade:");
 
         btAddCategoria.setText("+");
+        btAddCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddCategoriaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Vencimento:");
 
         tfDataVencimento.setText("22/04/1994");
+        tfDataVencimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfDataVencimentoActionPerformed(evt);
+            }
+        });
 
         btAddGrupoInd.setText("Adicionar Grupo");
         btAddGrupoInd.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +192,15 @@ public class FrameGrupo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
 
+    private void btAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddCategoriaActionPerformed
+        // TODO add your handling code here:
+        frameCategoria.setVisible(true);
+    }//GEN-LAST:event_btAddCategoriaActionPerformed
+
+    private void tfDataVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDataVencimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfDataVencimentoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -233,6 +241,22 @@ public class FrameGrupo extends javax.swing.JFrame {
             }
         });
 
+    }
+    public void ListaCategorias(){
+        
+        List<Categoria> categorias = new ArrayList<Categoria>();
+        
+        try {
+            Dao<Categoria> dao = Factoring.getDaoCategoria();
+            categorias = dao.busca();
+        } catch (DaoException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (Categoria cat: categorias){
+            cbCategoria.addItem(cat);
+        }
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddCategoria;
