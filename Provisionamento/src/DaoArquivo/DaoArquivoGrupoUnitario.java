@@ -29,6 +29,7 @@ public class DaoArquivoGrupoUnitario extends DaoArquivo<GrupoUnitario> implement
         if (!estaGravado(grupo.getCategoria())) {
             throw new GravaDadosException("Tentativa de gravar um Grupo Unitário que possui referência a outros objetos que não estão gravados");
         }
+        super.grava(grupo);
     }
 
     @Override
