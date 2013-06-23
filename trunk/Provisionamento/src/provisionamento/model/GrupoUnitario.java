@@ -10,6 +10,12 @@ public class GrupoUnitario  extends ModeloBase{
     private int quantidade;
     private int QrdDiasNotificacao;
     private Usuario criador;
+    private Date dataCriacao;
+
+     public GrupoUnitario() {
+        this.id = -1;
+        this.dataCriacao = new Date();
+    }
 
     public Usuario getCriador() {
         return criador;
@@ -50,11 +56,6 @@ public class GrupoUnitario  extends ModeloBase{
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    public GrupoUnitario()
-    {
-        this.id = -1;
-    }
 
     public int getQrdDiasNotificacao() {
         return QrdDiasNotificacao;
@@ -63,4 +64,11 @@ public class GrupoUnitario  extends ModeloBase{
     public void setQrdDiasNotificacao(int QrdDiasNotificacao) {
         this.QrdDiasNotificacao = QrdDiasNotificacao;
     }
+    
+    @Override
+    public String toString()
+    {
+        return this.getCategoria().getDescricao() + this.dataCriacao.toString();
+    }
+    
 }
