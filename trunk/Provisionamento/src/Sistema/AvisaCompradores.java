@@ -27,13 +27,16 @@ public class AvisaCompradores {
                 Iterator it = grupos.iterator();
                 GrupoComunitario grupoComunitario;
                 Date dataAtual = new Date(); 
+                Date prazo = null;
 
                 while(it.hasNext()){
                     grupoComunitario = (GrupoComunitario) it.next();
-                    if(grupoComunitario.getPrazoValidade() == dataAtual){
+                    prazo.setTime(grupoComunitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoComunitario.getQtd_dias_notificacao() + 1)));
+                    if(dataAtual.after(prazo)){
                         grupoComunitario.getComprador().getUsuario().setMensagem("Você precisa comprar mais " + grupoComunitario.getCategoria().getDescricao());
                     }
                 }
+                
                 avisou = true;
 
             } catch (DaoException ex) {
