@@ -4,15 +4,18 @@
  */
 package provisionamento.view;
 
+import Sistema.ConcreteSubject;
 import Sistema.Observer;
 import Sistema.Session;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramePrincipalController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Mensagem;
+import provisionamento.model.Usuario;
 
 /**
  *
@@ -48,9 +51,19 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
             ArrayList<GrupoComunitario> grupoCriador =
                     controller.getGruposCriador(
                     Session.getInstancia().getUsuarioLogado());
+            
+            for (GrupoComunitario grupoComunitario : grupoCriador) {
+                listaMeusGrupos.addElement(grupoComunitario);
+            }
+            
+            for (GrupoComunitario grupoComunitario : grupoParticipante) {
+                listaGruposParticipo.addElement(grupoComunitario);
+            }
 
-            lsGruposComunParticipa.setListData(grupoParticipante.toArray());
-            lsSeusGrupos.setListData(grupoCriador.toArray());
+            lsGruposComunParticipa.setModel(listaGruposParticipo);
+            lsSeusGrupos.setModel(listaMeusGrupos);
+            
+            ConcreteSubject.getInstancia().registerObserver(this);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,ex.getMessage());
@@ -58,6 +71,8 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
     }
     private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
+    private DefaultListModel listaMeusGrupos = new DefaultListModel();
+    private DefaultListModel<GrupoComunitario> listaGruposParticipo = new DefaultListModel<>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -343,6 +358,16 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer{
 
     @Override
     public void update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        GrupoComunitario grupoComunitario;
+        if(obj instanceof GrupoComunitario){
+            grupoComunitario = (GrupoComunitario) obj;
+            if(grupoComunitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())){
+                listaMeusGrupos.addElement(grupoComunitario);
+            }
+            
+            if(grupoComunitario.getParticipantes().contains(grupoComunitario)){
+                listaGruposParticipo.addElement(grupoComunitario);
+            }
+        }
     }
 }
