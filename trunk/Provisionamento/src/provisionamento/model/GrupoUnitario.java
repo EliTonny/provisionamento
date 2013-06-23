@@ -1,7 +1,11 @@
 package provisionamento.model;
 
 import DaoArquivo.ModeloBase;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GrupoUnitario  extends ModeloBase{
     private Categoria categoria;
@@ -78,7 +82,10 @@ public class GrupoUnitario  extends ModeloBase{
     @Override
     public String toString()
     {
-        return this.getCategoria().getDescricao() + this.dataCriacao.toString();
+        SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+        Date y = this.dataCriacao;
+        return this.getCategoria().getDescricao() + " " + sdf1.format(y);
+
     }
 
     public boolean isFinalizado() {
@@ -88,5 +95,5 @@ public class GrupoUnitario  extends ModeloBase{
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
-    
+
 }
