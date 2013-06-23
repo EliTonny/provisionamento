@@ -389,6 +389,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         }
 
         if (TxtValor.getText().trim().equals("")) {
+            ok = false;
             JOptionPane.showMessageDialog(this, "Valor não informado!");
         }
 
