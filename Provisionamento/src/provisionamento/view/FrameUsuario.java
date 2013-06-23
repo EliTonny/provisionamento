@@ -147,7 +147,22 @@ public class FrameUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btFecharActionPerformed
 
     private void btAdicionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionaActionPerformed
-        if(tfSenha.getText().equals(tfConSenha.getText())) {
+        boolean ok = true;
+        
+        if(tfNome.getText().equals("")){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Nome nao informado!");
+            this.limpar();
+        }
+        
+        if(!tfSenha.getText().equals(tfConSenha.getText())){
+            tfSenha.setText("");
+            tfConSenha.setText("");
+            ok = false;
+            JOptionPane.showMessageDialog(null, "A senha esta diferente!");
+        }
+        
+        if(ok == true) {
             try {
                 Dao<Usuario> dao = Factoring.getDaoUsuario();
                 Usuario usuario = new Usuario();
@@ -155,13 +170,11 @@ public class FrameUsuario extends javax.swing.JFrame {
                 usuario.setEmail(tfEmail.getText());
                 usuario.setSenha(tfSenha.getText());
                 dao.grava(usuario);
+                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+                this.limpar();
             } catch (DaoException ex) {
                 Logger.getLogger(FrameUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else{
-            tfSenha.setText("");
-            tfConSenha.setText("");
-            JOptionPane.showMessageDialog(null, "A senha esta diferente!");
         }
     }//GEN-LAST:event_btAdicionaActionPerformed
 
@@ -220,4 +233,11 @@ public class FrameUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfSenha;
     // End of variables declaration//GEN-END:variables
+
+    public void limpar(){
+        tfNome.setText("");
+        tfEmail.setText("");
+        tfSenha.setText("");
+        tfConSenha.setText("");
+    }
 }
