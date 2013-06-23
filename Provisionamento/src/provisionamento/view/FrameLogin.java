@@ -4,12 +4,8 @@
  */
 package provisionamento.view;
 
-import Sistema.Session;
 import MyExceptions.DaoException;
-import Sistema.AvisaCompradores;
-import Sistema.Dao;
-import Sistema.FacadeCarregaArquivos;
-import Sistema.Factoring;
+import Sistema.*;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,8 +1,10 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
+import Sistema.CategoriaSubject;
 import Sistema.Dao;
 import Sistema.Factoring;
+import Sistema.Observer;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoUnitario;
 
-public class FrameGrupoUnitario extends javax.swing.JFrame {
+public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
 
     /**
      * Creates new form FrameGrupoUnitario
@@ -35,7 +37,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
         } catch (DaoException ex) {
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //CategoriaSubject.getInstancia().registerObserver(this);
     }
 
     /**
@@ -330,4 +332,19 @@ public class FrameGrupoUnitario extends javax.swing.JFrame {
     private javax.swing.JTextField tfQtdDias;
     private javax.swing.JTextField tfQtdItens;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update() {
+        try {
+            cbCategoria.removeAllItems();
+            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
+            List<Categoria> categorias = daoCat.busca();
+
+            for (Categoria cat: categorias){
+                cbCategoria.addItem(cat);
+            }
+        } catch (DaoException ex) {
+            Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
