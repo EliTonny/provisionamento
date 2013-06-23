@@ -295,6 +295,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
+        CategoriaSubject.getInstancia().removeOberser(this);
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
 
@@ -473,18 +474,9 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update() {
-        cbCategoria.removeAllItems();
-        try {
-            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
-            List<Categoria> categorias = daoCat.busca();
-            Iterator it = categorias.iterator();
-            
-            while(it.hasNext()){
-                cbCategoria.addItem((Categoria) it.next());
-            }
-        } catch (DaoException ex) {
-            Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
+    public void update(Object obj) {
+        if(obj instanceof Categoria){
+            cbCategoria.addItem((Categoria) obj);
         }
-    }
+    }    
 }

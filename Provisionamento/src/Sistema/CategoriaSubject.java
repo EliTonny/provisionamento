@@ -38,9 +38,10 @@ public class CategoriaSubject implements Subject{
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(Object obj) {
+        
         for (Observer observer : observadores) {
-            observer.update();
+            observer.update(obj);
         }
     }
 }

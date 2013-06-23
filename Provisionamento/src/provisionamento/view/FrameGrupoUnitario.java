@@ -37,7 +37,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         } catch (DaoException ex) {
             Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //CategoriaSubject.getInstancia().registerObserver(this);
+        CategoriaSubject.getInstancia().registerObserver(this);
     }
 
     /**
@@ -261,6 +261,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
+        CategoriaSubject.getInstancia().removeOberser(this);
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
 
@@ -334,17 +335,9 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update() {
-        try {
-            cbCategoria.removeAllItems();
-            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
-            List<Categoria> categorias = daoCat.busca();
-
-            for (Categoria cat: categorias){
-                cbCategoria.addItem(cat);
-            }
-        } catch (DaoException ex) {
-            Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
+    public void update(Object obj) {
+        if(obj instanceof Categoria){
+            cbCategoria.addItem((Categoria) obj);
         }
     }
 }
