@@ -8,13 +8,16 @@ import MyExceptions.DaoException;
 import Sistema.Dao;
 import Sistema.Factoring;
 import Sistema.UsuarioLogado;
-import java.awt.Component;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
+import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
 
@@ -48,6 +51,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
                 listaUsuarios.addElement((Usuario) it.next());
             }
             
+            listaUsuarios.removeElement(UsuarioLogado.getUsuarioLogado());
             lsMembrosRepublica.setModel(listaUsuarios);
             
         } catch (DaoException ex) {
@@ -139,6 +143,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
         });
 
         btAddGrupoComun.setText("Adicionar Grupo");
+        btAddGrupoComun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddGrupoComunActionPerformed(evt);
+            }
+        });
 
         lsMembrosRepublica.setPreferredSize(new java.awt.Dimension(135, 210));
         jScrollPane3.setViewportView(lsMembrosRepublica);
@@ -317,6 +326,91 @@ public class FrameGrupoComunitario extends javax.swing.JFrame {
             listaParticipantes.removeElement(usuario);
         }
     }//GEN-LAST:event_btPraCaActionPerformed
+
+    private void btAddGrupoComunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoComunActionPerformed
+        boolean ok = true;
+        int qtdItens = 0;
+        int qtdVencimento = 0;
+        int qtdAntecip = 0;
+        Date prazo = new Date();
+        Participante participante;
+        
+        if(tfQtdItens.getText().equals("")){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Quantidade de itens não informada!");
+        }
+        try{
+            qtdItens = Integer.parseInt(tfQtdItens.getText());
+        } catch(NumberFormatException ex){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser um número!");
+        }
+        
+        if(tfDataVencimento.getText().equals("")){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Prazo de vencimento não informado!");
+        }
+        try{
+            qtdVencimento = Integer.parseInt(tfDataVencimento.getText());
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Prazo de vencimento deve ser um número!");
+        }
+        
+        if(tfQtdDias.getText().equals("")){
+            qtdAntecip = 0;
+        } else{
+            try{
+                qtdAntecip = Integer.parseInt(tfQtdDias.getText());
+            } catch(NumberFormatException ex){
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Dias para notificar deve ser um número!");
+            }
+        }
+        
+        if(listaParticipantes.isEmpty()){
+            ok = false;
+            JOptionPane.showMessageDialog(null, "Lista de participantes deve conter ao menous um participante!");
+        }
+        
+        if(ok == true){
+            prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
+            GrupoComunitario grupoComunitario = new GrupoComunitario();
+            grupoComunitario.setCriador(UsuarioLogado.getUsuarioLogado());
+            grupoComunitario.setQuantidade(qtdItens);
+            grupoComunitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
+            grupoComunitario.addComprador();
+            grupoComunitario.setQrdDiasNotificacao(qtdAntecip);
+            grupoComunitario.setPrazoValidade(prazo);
+            
+            try {
+                Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
+                Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
+                participante = new Participante();
+                participante.setUsuario(UsuarioLogado.getUsuarioLogado());
+                daoParticipante.grava(participante);
+                grupoComunitario.addParticipante(participante);
+                
+                while(!listaParticipantes.isEmpty()){
+                    participante = new Participante();
+                    participante.setUsuario(listaParticipantes.firstElement());
+                    daoParticipante.grava(participante);
+                    grupoComunitario.addParticipante(participante);
+                    
+                    listaParticipantes.removeElement(participante);
+                }
+                daoGrupoComunitario.grava(grupoComunitario);
+                
+                tfDataVencimento.setText("");
+                tfQtdDias.setText("");
+                tfQtdItens.setText("");
+                
+                JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                
+            } catch (DaoException ex) {
+                Logger.getLogger(FrameGrupoComunitario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btAddGrupoComunActionPerformed
 
     /**
      * @param args the command line arguments
