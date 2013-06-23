@@ -416,14 +416,14 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 participante.setUsuario(Session.getInstancia().getUsuarioLogado());
                 daoParticipante.grava(participante);
                 grupoComunitario.addParticipante(participante);
-
+                
                 while (!listaParticipantes.isEmpty()) {
                     participante = new Participante();
                     participante.setUsuario(listaParticipantes.firstElement());
                     daoParticipante.grava(participante);
                     grupoComunitario.addParticipante(participante);
 
-                    listaParticipantes.removeElement(participante);
+                    listaParticipantes.removeElement(participante.getUsuario());
                 }
                 daoGrupoComunitario.grava(grupoComunitario);
 
