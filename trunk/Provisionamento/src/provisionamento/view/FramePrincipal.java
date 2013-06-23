@@ -4,6 +4,7 @@
  */
 package provisionamento.view;
 
+import Sistema.CategoriaSubject;
 import Sistema.Session;
 import java.util.ArrayList;
 import java.util.Iterator;

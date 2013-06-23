@@ -1,5 +1,5 @@
 package Sistema;
 
 public interface Observer {
-    void update(Object o);
+    public void update();
 }
