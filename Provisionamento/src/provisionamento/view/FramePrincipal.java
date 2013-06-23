@@ -55,10 +55,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         btGrupo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        lsSeusGrupos = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        lsGruposComunParticipa = new javax.swing.JList();
         btGrupoComunitario = new javax.swing.JButton();
         btLogout = new javax.swing.JButton();
 
@@ -84,11 +84,11 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel4.setText("Seus Grupos");
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(lsSeusGrupos);
 
         jLabel5.setText("Grupos em que você está");
 
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(lsGruposComunParticipa);
 
         btGrupoComunitario.setText("Adicionar Novo Grupo Comunitário");
         btGrupoComunitario.addActionListener(new java.awt.event.ActionListener() {
@@ -240,14 +240,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbUsuLogado;
+    private javax.swing.JList lsGruposComunParticipa;
+    private javax.swing.JList lsSeusGrupos;
     private javax.swing.JTextArea taNotificacoes;
     // End of variables declaration//GEN-END:variables
 }
