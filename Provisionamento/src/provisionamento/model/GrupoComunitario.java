@@ -8,11 +8,11 @@ public class GrupoComunitario extends GrupoUnitario{
         
     private List<Participante> participantes;
     private Date dataCriacao;
+    private int comprador;
 
     public List<Participante> getParticipantes() {
         return participantes;
     }
-    private int comprador;
     
     public GrupoComunitario(){
         participantes = new ArrayList<>();
