@@ -361,12 +361,14 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
             frameGrupo.setVisible(true);
         }
         mensagem.getGrupo().setFinalizado(true);
+        ConcreteSubject.getInstancia().notifyObservers(mensagem.getGrupo());
         listaMensagens.removeElement(mensagem);
     }//GEN-LAST:event_btAtenderActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
         Mensagem mensagem = (Mensagem) lsNotificacoes.getSelectedValue();
         mensagem.getGrupo().setFinalizado(true);
+        ConcreteSubject.getInstancia().notifyObservers(mensagem.getGrupo());
     }//GEN-LAST:event_btRemoverActionPerformed
 
     /**
@@ -438,14 +440,24 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         if (obj instanceof GrupoComunitario) {
 
             GrupoComunitario grupo = (GrupoComunitario) obj;
-            if (grupo.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+            if(grupo.isFinalizado() == false){
+                if (grupo.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+                    DefaultListModel<GrupoComunitario> modelSeusGrupos =
+                            (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
+                    modelSeusGrupos.addElement(grupo);
+                } else {
+                    DefaultListModel<GrupoComunitario> modelGruposParticipantes =
+                            (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
+                    modelGruposParticipantes.addElement(grupo);
+                }
+            } else{
                 DefaultListModel<GrupoComunitario> modelSeusGrupos =
-                        (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
-                modelSeusGrupos.addElement(grupo);
-            } else {
+                            (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
+                    modelSeusGrupos.removeElement(grupo);
+                    
                 DefaultListModel<GrupoComunitario> modelGruposParticipantes =
-                        (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
-                modelGruposParticipantes.addElement(grupo);
+                            (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
+                    modelGruposParticipantes.addElement(grupo);
             }
 
         } else if (obj instanceof GrupoUnitario) {
@@ -454,8 +466,12 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                     (DefaultListModel<GrupoUnitario>) lsGruposPessoais.getModel();
 
             GrupoUnitario grupoUnitario = (GrupoUnitario) obj;
-            if (grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
-                modelGruposPessoais.addElement(grupoUnitario);
+            if(grupoUnitario.isFinalizado() == false){
+                if (grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+                    modelGruposPessoais.addElement(grupoUnitario);
+                }
+            } else{
+                modelGruposPessoais.removeElement(grupoUnitario);
             }
         }
     }
