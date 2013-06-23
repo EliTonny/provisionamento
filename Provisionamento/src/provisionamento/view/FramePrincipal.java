@@ -34,12 +34,8 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
             controller = new FramePrincipalController();
 
             List<Mensagem> mensagens = Session.getInstancia().getUsuarioLogado().getMensagens();
-            Iterator it = mensagens.iterator();
-            Mensagem mensagem;
-            while (it.hasNext()) {
-                mensagem = (Mensagem) it.next();
-                taNotificacoes.setText(taNotificacoes.getText()
-                        + "\n" + mensagem.getMensagem());
+            for (Mensagem mensagem : mensagens) {
+                taNotificacoes.setText(taNotificacoes.getText() + mensagem.getMensagem());
             }
 
             lbUsuLogado.setText(lbUsuLogado.getText() + Session.getInstancia().getUsuarioLogado().getNome() + "!");

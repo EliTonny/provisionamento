@@ -57,6 +57,10 @@ public class Usuario extends ModeloBase {
         this.mensagens.remove(mensagem);
     }
     
+    public void removeMensagens(){
+        this.mensagens.clear();
+    }
+    
     public List<Mensagem> getMensagens(){
         return this.mensagens;
     }
