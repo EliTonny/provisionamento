@@ -5,9 +5,12 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.*;
+import Sistema.AvisaCompradores;
+import Sistema.FacadeCarregaArquivos;
+import Sistema.Session;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import provisionamento.controller.FramesController;
 import provisionamento.model.Usuario;
 
 /**
@@ -21,9 +24,11 @@ public class FrameLogin extends javax.swing.JFrame{
      */
     public FrameLogin() {
         initComponents();
+        controller = new FramesController();
     }
     private FramePrincipal framePri;
     private FrameUsuario frameUsu;
+    private FramesController controller;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,8 +121,7 @@ public class FrameLogin extends javax.swing.JFrame{
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
         try {
-            Dao<Usuario> dao = Factoring.getDaoUsuario();
-            Usuario usuario = dao.busca(tfUsuario.getText());
+            Usuario usuario = controller.buscaUsuario(tfUsuario.getText());
             if (usuario != null) {
                 if (Arrays.equals(usuario.getSenha(), tfSenha.getPassword())) {
                     tfUsuario.setText("");
