@@ -41,14 +41,15 @@ public class FramePrincipalController {
         Dao<GrupoComunitario> daoG = Factoring.getDaoGrupoComunitario();
         ArrayList<GrupoComunitario> grupos = new ArrayList<>();
         for (GrupoComunitario g : daoG.busca()) {
-            if (!g.isPago()) {
+            //if (!g.isPago()) {
                 for (Participante p : g.getParticipantes()) {
-                    if (p.getUsuario().equals(usu)) {
+                    if (p.getUsuario().equals(usu) &&
+                        !p.isPago()) {
                         grupos.add(g);
                         break;
                     }
                 }
-            }
+            //}
         }
         return grupos;
     }
