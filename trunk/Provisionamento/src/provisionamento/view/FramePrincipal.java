@@ -161,7 +161,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         });
         jScrollPane2.setViewportView(lsSeusGrupos);
 
-        jLabel5.setText("Grupos em que você está");
+        jLabel5.setText("Grupos em que você esta devendo");
 
         jScrollPane3.setViewportView(lsGruposComunParticipa);
 
@@ -258,7 +258,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btBrowseReport))
                             .addComponent(jButton3))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +291,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbUsuLogado)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
