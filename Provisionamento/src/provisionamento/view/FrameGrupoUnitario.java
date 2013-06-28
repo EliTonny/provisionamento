@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import provisionamento.controller.FramesController;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoUnitario;
 
@@ -17,16 +18,17 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
      */
     private FrameCategoria frameCategoria;
     private boolean fechar;
+    private FramesController controller;
     
     public FrameGrupoUnitario() {
 
         initComponents();
         frameCategoria = new FrameCategoria();
+        controller = new FramesController();
         
         try {
             cbCategoria.removeAllItems();
-            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
-            List<Categoria> categorias = daoCat.busca();
+            List<Categoria> categorias = controller.buscaCategoria();
 
             for (Categoria cat: categorias){
                 cbCategoria.addItem(cat);
@@ -267,7 +269,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         if(ok == true){
             try {
                 prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
-                Dao<GrupoUnitario> dao = Factoring.getDaoGrupoUnitario();
+                
                 GrupoUnitario grupoUnitario = new GrupoUnitario();
                 grupoUnitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
                 grupoUnitario.setQrdDiasNotificacao(qtdAntecip);
@@ -276,9 +278,8 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setValorCompra(Double.parseDouble(TxtValor.getText().replace(',', '.')));
                 grupoUnitario.setCriador(Session.getInstancia().getUsuarioLogado());
                 
-                dao.grava(grupoUnitario);
+                controller.grava(grupoUnitario);
                 
-                ConcreteSubject.getInstancia().notifyObservers(grupoUnitario);
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 
                 if(this.fechar == true){

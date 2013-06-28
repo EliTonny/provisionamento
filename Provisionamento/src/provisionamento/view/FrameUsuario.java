@@ -5,14 +5,11 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.ConcreteSubject;
-import Sistema.Dao;
-import Sistema.Factoring;
-import Sistema.Observer;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import provisionamento.controller.FramesController;
 import provisionamento.model.Usuario;
 
 /**
@@ -26,7 +23,10 @@ public class FrameUsuario extends javax.swing.JFrame {
      */
     public FrameUsuario() {
         initComponents();
+        controller = new FramesController();
     }
+    
+    private FramesController controller;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -163,14 +163,12 @@ public class FrameUsuario extends javax.swing.JFrame {
         
         if(ok == true) {
             try {
-                Dao<Usuario> dao = Factoring.getDaoUsuario();
                 Usuario usuario = new Usuario();
                 usuario.setNome(tfNome.getText());
                 usuario.setEmail(tfEmail.getText());
                 usuario.setSenha(tfSenha.getPassword());
-                dao.grava(usuario);
+                controller.grava(usuario);
                 
-                ConcreteSubject.getInstancia().notifyObservers(usuario);
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                 this.limpar();
             } catch (DaoException ex) {

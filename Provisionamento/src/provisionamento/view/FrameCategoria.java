@@ -5,10 +5,8 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
-import Sistema.ConcreteSubject;
-import Sistema.Dao;
-import Sistema.Factoring;
 import javax.swing.JOptionPane;
+import provisionamento.controller.FramesController;
 import provisionamento.model.Categoria;
 
 /**
@@ -22,8 +20,10 @@ public class FrameCategoria extends javax.swing.JFrame {
      */
     public FrameCategoria() {
         initComponents();
+        controller = new FramesController();
     }
     
+    private FramesController controller;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,10 +113,8 @@ public class FrameCategoria extends javax.swing.JFrame {
             try {
                 Categoria categoria = new Categoria();
                 categoria.setDescricao(tfNome.getText());
-                Dao<Categoria> dao = Factoring.getDaoCategoria();
-                dao.grava(categoria);
+                controller.grava(categoria);
                 tfNome.setText("");                
-                ConcreteSubject.getInstancia().notifyObservers(categoria);
                 JOptionPane.showMessageDialog(null, "Categoria cadastrada com sucesso!");
             } catch (DaoException ex) {
                 System.out.println(ex.getMessage());
