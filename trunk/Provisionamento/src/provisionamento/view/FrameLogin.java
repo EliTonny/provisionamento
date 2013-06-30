@@ -153,7 +153,7 @@ public class FrameLogin extends javax.swing.JFrame{
         Usuario user;
         try {
             if (!(tfUsuarioEsquecido.getText().isEmpty())) {
-                user = controller.buscaUsuario(tfUsuarioEsquecido.getText());
+                user = controller.buscaUsuario(this.tfUsuario.getText());
                 if (user != null) {
                     EmailSender emailSender = new EmailSender(user);
                 } else {
