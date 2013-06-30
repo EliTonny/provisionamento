@@ -7,7 +7,6 @@ import Sistema.Observer;
 import Sistema.Session;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +35,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
             for (Mensagem mensagem : mensagens) {
                 listaMensagens.addElement(mensagem);
             }
-            
+
             lsNotificacoes.setModel(listaMensagens);
 
             lbUsuLogado.setText(lbUsuLogado.getText() + Session.getInstancia().getUsuarioLogado().getNome() + "!");
@@ -86,7 +85,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     }
     private FrameGrupoUnitario frameGrupo;
     private FrameGrupoComunitario frameGrupoComunitario;
-    private JFileChooser SeletorPDF;  
+    private JFileChooser SeletorPDF;
     private DefaultListModel<Mensagem> listaMensagens = new DefaultListModel<>();
 
     /**
@@ -378,10 +377,10 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
     private void btAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtenderActionPerformed
         Mensagem mensagem = (Mensagem) lsNotificacoes.getSelectedValue();
-        if(mensagem.getGrupo() instanceof GrupoComunitario){
+        if (mensagem.getGrupo() instanceof GrupoComunitario) {
             frameGrupoComunitario = new FrameGrupoComunitario((GrupoComunitario) mensagem.getGrupo());
             frameGrupoComunitario.setVisible(true);
-        } else{
+        } else {
             frameGrupo = new FrameGrupoUnitario(mensagem.getGrupo());
             frameGrupo.setVisible(true);
         }
@@ -398,53 +397,54 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
     private void btBrowseReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBrowseReportActionPerformed
         String nomeCompleto;
-        
+
         SeletorPDF = new javax.swing.JFileChooser();
         SeletorPDF.setFileSelectionMode(JFileChooser.FILES_ONLY);
         SeletorPDF.setApproveButtonText("OK");
         SeletorPDF.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         SeletorPDF.setCurrentDirectory(new java.io.File("C:\\"));
-        
-        int i= SeletorPDF.showSaveDialog(null);
-        
-        if (i==1){
-           tfCaminhoReport.setText("");
+
+        int i = SeletorPDF.showSaveDialog(null);
+
+        if (i == 1) {
+            tfCaminhoReport.setText("");
         } else {
             File arquivo = SeletorPDF.getSelectedFile();
             nomeCompleto = arquivo.getName();
 
-            if(!(nomeCompleto.contains(".")))
+            if (!(nomeCompleto.contains("."))) {
                 tfCaminhoReport.setText(arquivo.getPath() + ".pdf");
-            else
+            } else {
                 tfCaminhoReport.setText(arquivo.getPath());
+            }
         }
-        
+
         SeletorPDF.setVisible(true);
 
     }//GEN-LAST:event_btBrowseReportActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        String extensao;  
+        String extensao;
         String nomeArqu;
 
-        if(!(tfCaminhoReport.getText().equals(""))){ 
+        if (!(tfCaminhoReport.getText().equals(""))) {
             nomeArqu = tfCaminhoReport.getText();
             extensao = nomeArqu.substring(nomeArqu.lastIndexOf("."), nomeArqu.length());
-            
-            if (!(extensao.equals(".pdf"))){
-                    JOptionPane.showMessageDialog(null, "Extensão Incorreta.");
+
+            if (!(extensao.equals(".pdf"))) {
+                JOptionPane.showMessageDialog(null, "Extensão Incorreta.");
             } else {
-                    try {
-                        if(rbMinhasDividasReport.isSelected()){
-                            MinhasDividasReport mdr = new MinhasDividasReport(tfCaminhoReport.getText());
-                        }
-                        if(rbMeusDevedoresReporr.isSelected()){
-                            MeusDevedoresReport mder = new MeusDevedoresReport(tfCaminhoReport.getText());
-                        }
-                    } catch (Exception ex) {
-                        Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    if (rbMinhasDividasReport.isSelected()) {
+                        MinhasDividasReport mdr = new MinhasDividasReport(tfCaminhoReport.getText());
                     }
+                    if (rbMeusDevedoresReporr.isSelected()) {
+                        MeusDevedoresReport mder = new MeusDevedoresReport(tfCaminhoReport.getText());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -521,24 +521,23 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         if (obj instanceof GrupoComunitario) {
 
             GrupoComunitario grupo = (GrupoComunitario) obj;
-            if(grupo.isFinalizado() == false){
-                if (grupo.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
-                    DefaultListModel<GrupoComunitario> modelSeusGrupos =
-                            (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
+
+            if (grupo.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
+                DefaultListModel<GrupoComunitario> modelSeusGrupos =
+                        (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
+                if (!grupo.isFinalizado() && !grupo.isPago()) {
                     modelSeusGrupos.addElement(grupo);
                 } else {
-                    DefaultListModel<GrupoComunitario> modelGruposParticipantes =
-                            (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
-                    modelGruposParticipantes.addElement(grupo);
-                }
-            } else{
-                DefaultListModel<GrupoComunitario> modelSeusGrupos =
-                            (DefaultListModel<GrupoComunitario>) lsSeusGrupos.getModel();
                     modelSeusGrupos.removeElement(grupo);
-                    
+                }
+            } else {
                 DefaultListModel<GrupoComunitario> modelGruposParticipantes =
-                            (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
+                        (DefaultListModel<GrupoComunitario>) lsGruposComunParticipa.getModel();
+                if (!grupo.isFinalizado() && !grupo.isPago()) {
                     modelGruposParticipantes.addElement(grupo);
+                } else {
+                    modelGruposParticipantes.removeElement(grupo);
+                }
             }
 
         } else if (obj instanceof GrupoUnitario) {
@@ -547,11 +546,11 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                     (DefaultListModel<GrupoUnitario>) lsGruposPessoais.getModel();
 
             GrupoUnitario grupoUnitario = (GrupoUnitario) obj;
-            if(grupoUnitario.isFinalizado() == false){
+            if (grupoUnitario.isFinalizado() == false) {
                 if (grupoUnitario.getCriador().equals(Session.getInstancia().getUsuarioLogado())) {
                     modelGruposPessoais.addElement(grupoUnitario);
                 }
-            } else{
+            } else {
                 modelGruposPessoais.removeElement(grupoUnitario);
             }
         }

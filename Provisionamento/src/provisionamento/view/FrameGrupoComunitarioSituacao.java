@@ -1,6 +1,7 @@
 package provisionamento.view;
 
 import MyExceptions.DaoException;
+import Sistema.ConcreteSubject;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import provisionamento.controller.FramGrupoComunitarioSituacaoController;
@@ -108,6 +109,7 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
             if (todosPagaram) {
                 controller.PagarGrupo(grupoComunitario);
                 JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!\n Todos usuarios pagaram, o grupo será finalizado.");
+                ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!");
