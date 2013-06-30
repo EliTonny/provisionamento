@@ -108,7 +108,7 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
             }
             if (todosPagaram) {
                 controller.PagarGrupo(grupoComunitario);
-                JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!\n Todos usuarios pagaram, o grupo será finalizado.");
+                JOptionPane.showMessageDialog(this, "Pagamento realizado com sucesso!\nTodos usuarios pagaram, o grupo será finalizado.");
                 ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
                 this.dispose();
             } else {
@@ -116,7 +116,7 @@ public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
             }
 
         } catch (DaoException ex) {
-            JOptionPane.showInputDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btGrava
     // Variables declaration - do not modify//GEN-BEGIN:variables

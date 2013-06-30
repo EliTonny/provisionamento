@@ -12,24 +12,24 @@ import provisionamento.model.Categoria;
 import provisionamento.model.GrupoUnitario;
 import provisionamento.model.Mensagem;
 
-public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
+public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer {
 
     private FrameCategoria frameCategoria;
     private boolean fechar;
     private FramesController controller;
     private Mensagem mensagemFonte;
-    
+
     public FrameGrupoUnitario() {
 
         initComponents();
         frameCategoria = new FrameCategoria();
         controller = new FramesController();
-        
+
         try {
             cbCategoria.removeAllItems();
             List<Categoria> categorias = controller.buscaCategoria();
 
-            for (Categoria cat: categorias){
+            for (Categoria cat : categorias) {
                 cbCategoria.addItem(cat);
             }
         } catch (DaoException ex) {
@@ -37,8 +37,8 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         }
         ConcreteSubject.getInstancia().registerObserver(this);
     }
-    
-    public FrameGrupoUnitario(Mensagem mensagem){
+
+    public FrameGrupoUnitario(Mensagem mensagem) {
         initComponents();
         controller = new FramesController();
         GrupoUnitario grupo = mensagem.getGrupo();
@@ -47,7 +47,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         cbCategoria.addItem(grupo.getCategoria());
         cbCategoria.setEnabled(false);
         btAddCategoria.setEnabled(false);
-        
+
         this.fechar = true;
     }
 
@@ -230,48 +230,49 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void btAddGrupoIndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddGrupoIndActionPerformed
-        int qtdItens = 0;
-        int qtdAntecip = 0;
-        int qtdVencimento = 0;
-        boolean ok = true;
-        Date prazo = new Date();
-        
-        if(tfQtdItens.getText().equals("")){
-            ok = false;
-            JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser informada!");
-        }
-        try{
-            qtdItens = Integer.parseInt(tfQtdItens.getText());
-        } catch(NumberFormatException ex){
-            ok = false;
-            JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser um número!");
-        }
-        
-        if(tfDataVencimento.getText().equals("")){
-            ok = false;
-            JOptionPane.showMessageDialog(null, "Prazo de validade deve ser informado!");
-        }
-        try{
-            qtdVencimento = Integer.parseInt(tfDataVencimento.getText());
-        } catch(NumberFormatException ex){
-            ok = false;
-            JOptionPane.showMessageDialog(null, "Prazo de validade deve ser um número!");
-        }
-        
-        if(tfQtdDias.getText().equals("")){
-            qtdAntecip = 0;
-        } else{
-            try{
-                qtdAntecip = Integer.parseInt(tfQtdDias.getText());
-            } catch(NumberFormatException ex){
+        try {
+
+            int qtdItens = 0;
+            int qtdAntecip = 0;
+            int qtdVencimento = 0;
+            boolean ok = true;
+            Date prazo = new Date();
+
+            if (tfQtdItens.getText().equals("")) {
                 ok = false;
-                JOptionPane.showMessageDialog(null, "Dias para notificar deve ser um número!");
+                JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser informada!");
             }
-        }
-        if(ok == true){
             try {
+                qtdItens = Integer.parseInt(tfQtdItens.getText());
+            } catch (NumberFormatException ex) {
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Quantidade de itens deve ser um número!");
+            }
+
+            if (tfDataVencimento.getText().equals("")) {
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Prazo de validade deve ser informado!");
+            }
+            try {
+                qtdVencimento = Integer.parseInt(tfDataVencimento.getText());
+            } catch (NumberFormatException ex) {
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Prazo de validade deve ser um número!");
+            }
+
+            if (tfQtdDias.getText().equals("")) {
+                qtdAntecip = 0;
+            } else {
+                try {
+                    qtdAntecip = Integer.parseInt(tfQtdDias.getText());
+                } catch (NumberFormatException ex) {
+                    ok = false;
+                    JOptionPane.showMessageDialog(null, "Dias para notificar deve ser um número!");
+                }
+            }
+            if (ok == true) {
                 prazo.setTime(prazo.getTime() + ((24 * 3600000) * qtdVencimento));
-                
+
                 GrupoUnitario grupoUnitario = new GrupoUnitario();
                 grupoUnitario.setCategoria((Categoria) cbCategoria.getSelectedItem());
                 grupoUnitario.setQrdDiasNotificacao(qtdAntecip);
@@ -279,30 +280,29 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setPrazoValidade(prazo);
                 grupoUnitario.setValorCompra(Double.parseDouble(TxtValor.getText().replace(',', '.')));
                 grupoUnitario.setCriador(Session.getInstancia().getUsuarioLogado());
-                
+
                 controller.grava(grupoUnitario);
-                if(mensagemFonte != null){
+                if (mensagemFonte != null) {
                     mensagemFonte.getGrupo().setFinalizado(true);
                     controller.notificar(mensagemFonte);
                     controller.notificar(mensagemFonte.getGrupo());
                 }
-                
+
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
-                
-                if(this.fechar == true){
+
+                if (this.fechar == true) {
                     ConcreteSubject.getInstancia().removeOberser(this);
                     this.dispose();
                 }
-                
+
                 tfDataVencimento.setText(null);
                 tfQtdDias.setText(null);
                 tfQtdItens.setText(null);
                 TxtValor.setText(null);
-            } catch (DaoException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
     }//GEN-LAST:event_btAddGrupoIndActionPerformed
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
@@ -322,49 +322,6 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
     private void TxtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtValorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtValorActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameGrupoUnitario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameGrupoUnitario().setVisible(true);
-                
-            }
-        });
-
-    }     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField TxtValor;
@@ -387,7 +344,7 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
 
     @Override
     public void update(Object obj) {
-        if(obj instanceof Categoria){
+        if (obj instanceof Categoria) {
             cbCategoria.addItem((Categoria) obj);
         }
     }
