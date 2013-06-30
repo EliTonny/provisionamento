@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package provisionamento.view;
 
 import PDF.MeusDevedoresReport;
@@ -29,9 +25,6 @@ import provisionamento.model.Mensagem;
  */
 public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
-    /**
-     * Creates new form FramePrincipal
-     */
     FramePrincipalController controller;
 
     public FramePrincipal() {

@@ -13,9 +13,6 @@ import provisionamento.model.GrupoUnitario;
 
 public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
 
-    /**
-     * Creates new form FrameGrupoUnitario
-     */
     private FrameCategoria frameCategoria;
     private boolean fechar;
     private FramesController controller;
