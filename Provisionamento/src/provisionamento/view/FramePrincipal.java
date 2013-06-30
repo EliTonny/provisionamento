@@ -439,9 +439,11 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                 try {
                     if (rbMinhasDividasReport.isSelected()) {
                         MinhasDividasReport mdr = new MinhasDividasReport(tfCaminhoReport.getText());
+                        tfCaminhoReport.setText("");
                     }
                     if (rbMeusDevedoresReporr.isSelected()) {
                         MeusDevedoresReport mder = new MeusDevedoresReport(tfCaminhoReport.getText());
+                        tfCaminhoReport.setText("");
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
