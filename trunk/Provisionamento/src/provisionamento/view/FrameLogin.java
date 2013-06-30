@@ -1,10 +1,13 @@
 package provisionamento.view;
 
+import Email.EmailSender;
 import MyExceptions.DaoException;
 import Sistema.AvisaCompradores;
 import Sistema.FacadeCarregaArquivos;
 import Sistema.Session;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramesController;
 import provisionamento.model.Usuario;
@@ -35,6 +38,7 @@ public class FrameLogin extends javax.swing.JFrame{
         tfUsuario = new javax.swing.JTextField();
         tfSenha = new javax.swing.JPasswordField();
         btLogin = new javax.swing.JButton();
+        tfUsuarioEsquecido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +60,14 @@ public class FrameLogin extends javax.swing.JFrame{
             }
         });
 
+        tfUsuarioEsquecido.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        tfUsuarioEsquecido.setText("Véi, esquecesse a tua senha? Então clique aqui!");
+        tfUsuarioEsquecido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfUsuarioEsquecidoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,13 +86,17 @@ public class FrameLogin extends javax.swing.JFrame{
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                    .addComponent(tfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btLogin))
-                        .addContainerGap())
+                                    .addComponent(tfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(321, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 188, Short.MAX_VALUE)
+                        .addGap(0, 91, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(196, 196, 196))))
+                        .addGap(196, 196, 196))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btLogin)
+                            .addComponent(tfUsuarioEsquecido))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,9 +115,11 @@ public class FrameLogin extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(17, 17, 17)
                 .addComponent(btLogin)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tfUsuarioEsquecido)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,6 +148,25 @@ public class FrameLogin extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_btLoginActionPerformed
 
+    private void tfUsuarioEsquecidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfUsuarioEsquecidoMouseClicked
+
+        Usuario user;
+        try {
+            if (!(tfUsuarioEsquecido.getText().isEmpty())) {
+                user = controller.buscaUsuario(tfUsuarioEsquecido.getText());
+                if (user != null) {
+                    EmailSender emailSender = new EmailSender(user);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Esqueceu?\nEntão insira seu usuário e clique novamente!");
+            }
+        } catch (DaoException ex) {
+            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tfUsuarioEsquecidoMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLogin;
     private javax.swing.JLabel jLabel1;
@@ -139,6 +176,7 @@ public class FrameLogin extends javax.swing.JFrame{
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPasswordField tfSenha;
     private javax.swing.JTextField tfUsuario;
+    private javax.swing.JLabel tfUsuarioEsquecido;
     // End of variables declaration//GEN-END:variables
 
 }
