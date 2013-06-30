@@ -86,7 +86,6 @@ public class DaoArquivoTest {
     @Test()
     public void categoriaTest() {
         try {
-            clearBase();
             Dao<Categoria> daoCategoria = Factoring.getDaoCategoria();
 
             Categoria cat = new Categoria();
@@ -104,7 +103,6 @@ public class DaoArquivoTest {
     @Test()
     public void grupoComunitarioTest() {
         try {
-            clearBase();
             Dao<Usuario> daoUsuario = Factoring.getDaoUsuario();
             Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
             Dao<GrupoComunitario> daoGrupoCom = Factoring.getDaoGrupoComunitario();
@@ -148,7 +146,6 @@ public class DaoArquivoTest {
     @Test()
     public void grupoUnitarioTest() {
         try {
-            clearBase();
             Dao<Usuario> daoUsuario = Factoring.getDaoUsuario();
             Dao<GrupoUnitario> daoGrupoUni = Factoring.getDaoGrupoUnitario();
 
