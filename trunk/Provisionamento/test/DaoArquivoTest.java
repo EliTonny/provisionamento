@@ -1,18 +1,9 @@
 
-import MyExceptions.DaoException;
 import Resources.Resources;
 import Sistema.Dao;
-import Sistema.FacadeCarregaArquivos;
 import Sistema.Factoring;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import provisionamento.model.Categoria;
