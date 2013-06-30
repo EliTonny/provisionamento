@@ -9,7 +9,8 @@ public class Usuario extends ModeloBase {
     private String nome;
     private char[] senha;
     private String email;
-    private List<Mensagem> mensagens;
+    
+    private transient List<Mensagem> mensagens;
 
     public Usuario(){
         this.mensagens = new ArrayList<>();

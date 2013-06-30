@@ -3,6 +3,7 @@ package DaoArquivo;
 import MyExceptions.DaoException;
 import MyExceptions.DeletaDadosException;
 import MyExceptions.GravaDadosException;
+import Resources.Resources;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -14,8 +15,7 @@ public abstract class DaoArquivo<T extends ModeloBase> implements Serializable {
     private File arquivo;
 
     public DaoArquivo(String nomeArquivo) throws DaoException {
-        //this.arquivo = new File(Resources.CAMINHO_ARQUIVOS + "\\" + nomeArquivo);
-        this.arquivo = new File("C:\\Temp\\" + nomeArquivo);
+        this.arquivo = new File(Resources.CAMINHO_ARQUIVOS + nomeArquivo);
         dados = new Dados<>();
         this.dados.Carrega(arquivo);
         this.AtualizaReferencias();

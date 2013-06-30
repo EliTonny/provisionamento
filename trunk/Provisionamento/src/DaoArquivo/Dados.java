@@ -77,6 +77,10 @@ public class Dados<T extends ModeloBase> implements Serializable{
                     this.proximoId = d.proximoId;
                 }
             }
+            else
+            {
+                arquivo.createNewFile();
+            }
         } catch (IOException | ClassNotFoundException ex) {
             throw new CarregaDadosException(ex);
         }
