@@ -174,6 +174,7 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
         jLabel3.setText("Relatórios");
 
         buttonGroup1.add(rbMinhasDividasReport);
+        rbMinhasDividasReport.setSelected(true);
         rbMinhasDividasReport.setText("Relatórios das Minha Dívidas");
 
         buttonGroup1.add(rbMeusDevedoresReporr);
@@ -446,6 +447,8 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
                     Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Informe diretório para salvar o arquivo.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
