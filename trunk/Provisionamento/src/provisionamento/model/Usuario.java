@@ -56,6 +56,11 @@ public class Usuario extends ModeloBase {
     public List<Mensagem> getMensagens(){
         return this.mensagens;
     }
+    
+    public void iniMensagens(){
+        if(this.mensagens == null)
+            this.mensagens = new ArrayList<>();
+    }
 
     @Override
     public boolean equals(Object o) {
