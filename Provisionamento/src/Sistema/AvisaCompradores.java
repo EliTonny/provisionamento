@@ -27,7 +27,7 @@ public class AvisaCompradores {
             
             Date dataAtual = new Date(); 
             Date prazo = new Date();
-            Session.getInstancia().getUsuarioLogado().removeMensagens();
+            //Session.getInstancia().getUsuarioLogado().removeMensagens();
 
             for (GrupoComunitario grupoComunitario : grupos) {
                 prazo.setTime(grupoComunitario.getPrazoValidade().getTime() - ((24 * 3600000) * (grupoComunitario.getQrdDiasNotificacao() + 1)));
@@ -46,7 +46,8 @@ public class AvisaCompradores {
                 if(dataAtual.after(prazo)){
                     if(Session.getInstancia().getUsuarioLogado().equals(grupoUnitario.getCriador())
                        && grupoUnitario.isFinalizado() == false){
-                        Session.getInstancia().getUsuarioLogado().setMensagem("Você precisa comprar mais " + grupoUnitario.getCategoria().getDescricao(),
+                        Session.getInstancia().getUsuarioLogado().setMensagem("Você precisa comprar mais " + grupoUnitario.getCategoria().getDescricao() +
+                                                                               grupoUnitario.getId(),
                                                                                grupoUnitario);
 
                     }

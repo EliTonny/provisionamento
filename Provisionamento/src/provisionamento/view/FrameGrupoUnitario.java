@@ -10,12 +10,14 @@ import javax.swing.JOptionPane;
 import provisionamento.controller.FramesController;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoUnitario;
+import provisionamento.model.Mensagem;
 
 public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
 
     private FrameCategoria frameCategoria;
     private boolean fechar;
     private FramesController controller;
+    private Mensagem mensagemFonte;
     
     public FrameGrupoUnitario() {
 
@@ -36,8 +38,11 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
         ConcreteSubject.getInstancia().registerObserver(this);
     }
     
-    public FrameGrupoUnitario(GrupoUnitario grupo){
+    public FrameGrupoUnitario(Mensagem mensagem){
         initComponents();
+        controller = new FramesController();
+        GrupoUnitario grupo = mensagem.getGrupo();
+        this.mensagemFonte = mensagem;
         cbCategoria.removeAllItems();
         cbCategoria.addItem(grupo.getCategoria());
         cbCategoria.setEnabled(false);
@@ -276,6 +281,11 @@ public class FrameGrupoUnitario extends javax.swing.JFrame implements Observer{
                 grupoUnitario.setCriador(Session.getInstancia().getUsuarioLogado());
                 
                 controller.grava(grupoUnitario);
+                if(mensagemFonte != null){
+                    mensagemFonte.getGrupo().setFinalizado(true);
+                    controller.notificar(mensagemFonte);
+                    controller.notificar(mensagemFonte.getGrupo());
+                }
                 
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 

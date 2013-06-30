@@ -16,25 +16,25 @@ public class FramesController {
     public void grava(Usuario usu) throws DaoException{
         Dao<Usuario> dao = Factoring.getDaoUsuario();
         dao.grava(usu);
-        ConcreteSubject.getInstancia().notifyObservers(usu);
+        this.notificar(usu);
     }
     
     public void grava(Categoria cat) throws DaoException{
         Dao<Categoria> dao = Factoring.getDaoCategoria();
         dao.grava(cat);
-        ConcreteSubject.getInstancia().notifyObservers(cat);
+        this.notificar(cat);
     }
     
     public void grava(GrupoUnitario grupoUnitario) throws DaoException{
         Dao<GrupoUnitario> dao = Factoring.getDaoGrupoUnitario();
         dao.grava(grupoUnitario);
-        ConcreteSubject.getInstancia().notifyObservers(grupoUnitario);
+        this.notificar(grupoUnitario);
     }
     
     public void grava(GrupoComunitario grupoComunitario) throws DaoException{
         Dao<GrupoComunitario> dao = Factoring.getDaoGrupoComunitario();
         dao.grava(grupoComunitario);
-        ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
+        this.notificar(grupoComunitario);
     }
     
     public void grava(Participante participante) throws DaoException{
@@ -110,7 +110,7 @@ public class FramesController {
         return grupos;
     }
     
-    public void notificar(){
-        
+    public void notificar(Object obj){
+        ConcreteSubject.getInstancia().notifyObservers(obj);
     }
 }
