@@ -18,7 +18,6 @@ public class FrameUsuario extends javax.swing.JFrame {
         initComponents();
         controller = new FramesController();
     }
-    
     private FramesController controller;
 
     @SuppressWarnings("unchecked")
@@ -134,78 +133,41 @@ public class FrameUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btFecharActionPerformed
 
     private void btAdicionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionaActionPerformed
-        boolean ok = true;
-        
-        if(tfNome.getText().equals("")){
-            ok = false;
-            JOptionPane.showMessageDialog(null, "Nome nao informado!");
-            this.limpar();
-        }
-        
-        if(!Arrays.equals(tfSenha.getPassword(), tfConSenha.getPassword())){
-            tfSenha.setText("");
-            tfConSenha.setText("");
-            ok = false;
-            JOptionPane.showMessageDialog(null, "A senha esta diferente!");
-        }
-        
-        if(ok == true) {
-            try {
-                Usuario usuario = new Usuario();
-                usuario.setNome(tfNome.getText());
-                usuario.setEmail(tfEmail.getText());
-                usuario.setSenha(tfSenha.getPassword());
-                controller.grava(usuario);
-                
-                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+        try {
+            boolean ok = true;
+
+            if (tfNome.getText().equals("")) {
+                ok = false;
+                JOptionPane.showMessageDialog(null, "Nome nao informado!");
                 this.limpar();
-            } catch (DaoException ex) {
-                Logger.getLogger(FrameUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            if (!Arrays.equals(tfSenha.getPassword(), tfConSenha.getPassword())) {
+                tfSenha.setText("");
+                tfConSenha.setText("");
+                ok = false;
+                JOptionPane.showMessageDialog(null, "A senha esta diferente!");
+            }
+
+            if (ok == true) {
+                try {
+                    Usuario usuario = new Usuario();
+                    usuario.setNome(tfNome.getText());
+                    usuario.setEmail(tfEmail.getText());
+                    usuario.setSenha(tfSenha.getPassword());
+                    controller.grava(usuario);
+
+                    JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+                    this.limpar();
+                } catch (DaoException ex) {
+                    Logger.getLogger(FrameUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btAdicionaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new FrameUsuario().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdiciona;
     private javax.swing.JButton btFechar;
@@ -221,7 +183,7 @@ public class FrameUsuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField tfSenha;
     // End of variables declaration//GEN-END:variables
 
-    public void limpar(){
+    public void limpar() {
         tfNome.setText("");
         tfEmail.setText("");
         tfSenha.setText("");
