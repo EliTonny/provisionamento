@@ -3,6 +3,7 @@ package provisionamento.view;
 import Sistema.Dao;
 import Sistema.FacadeCarregaArquivos;
 import Sistema.Factoring;
+import javax.swing.JOptionPane;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
@@ -12,15 +13,15 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            
+
             //criaTeste();
-            
+
             new FrameLogin().setVisible(true);
             if (Factoring.getDaoUsuario().busca().isEmpty()) {
                 new FrameUsuario().setVisible(true);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
