@@ -9,7 +9,6 @@ public class Usuario extends ModeloBase {
     private String nome;
     private char[] senha;
     private String email;
-    private double salario;
     private List<Mensagem> mensagens;
 
     public Usuario(){
@@ -30,14 +29,6 @@ public class Usuario extends ModeloBase {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public double getSalario() {
-        return salario;
-    }
-
-    public void setSalario(double salario) {
-        this.salario = salario;
     }
 
     public char[] getSenha() {
