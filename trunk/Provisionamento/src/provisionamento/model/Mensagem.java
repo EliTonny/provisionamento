@@ -6,7 +6,7 @@ import DaoArquivo.ModeloBase;
  *
  * @author Eli T. de Souza
  */
-public class Mensagem extends ModeloBase{
+public class Mensagem {
     private String mensagem;
     private GrupoUnitario grupo;
     
