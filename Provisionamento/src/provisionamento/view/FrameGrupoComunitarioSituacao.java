@@ -4,19 +4,19 @@ import MyExceptions.DaoException;
 import Sistema.ConcreteSubject;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import provisionamento.controller.FrameGrupoComunitarioSituacaoController;
+import provisionamento.controller.FramesController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 
 public class FrameGrupoComunitarioSituacao extends javax.swing.JFrame {
 
     private GrupoComunitario grupoComunitario;
-    private FrameGrupoComunitarioSituacaoController controller;
+    private FramesController controller;
 
     public FrameGrupoComunitarioSituacao(GrupoComunitario grupo) {
 
         initComponents();
-        controller = new FrameGrupoComunitarioSituacaoController();
+        controller = new FramesController();
         grupoComunitario = grupo;
 
         DefaultTableModel model = (DefaultTableModel) this.TableGrupos.getModel();

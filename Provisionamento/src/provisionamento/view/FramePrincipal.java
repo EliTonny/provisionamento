@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import provisionamento.controller.FramePrincipalController;
+import provisionamento.controller.FramesController;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.GrupoUnitario;
 import provisionamento.model.Mensagem;
@@ -24,12 +24,12 @@ import provisionamento.model.Mensagem;
  */
 public class FramePrincipal extends javax.swing.JFrame implements Observer {
 
-    FramePrincipalController controller;
+    FramesController controller;
 
     public FramePrincipal() {
         try {
             initComponents();
-            controller = new FramePrincipalController();
+            controller = new FramesController();
 
             List<Mensagem> mensagens = Session.getInstancia().getUsuarioLogado().getMensagens();
             for (Mensagem mensagem : mensagens) {

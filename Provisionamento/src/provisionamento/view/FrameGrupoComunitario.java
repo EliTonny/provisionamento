@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import provisionamento.controller.FramesController;
 import provisionamento.model.Categoria;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
@@ -25,12 +26,12 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
      */
     public FrameGrupoComunitario() {
         initComponents();
+        controller = new FramesController();
         tfCriador.setText(Session.getInstancia().getUsuarioLogado().getNome());
         cbCategoria.removeAllItems();
         lsParticipantesGrupo.setModel(listaParticipantes);
         try {
-            Dao<Categoria> daoCat = Factoring.getDaoCategoria();
-            List<Categoria> categorias = daoCat.busca();
+            List<Categoria> categorias = controller.buscaCategoria();
 
             for (Categoria categoria : categorias) {
                 cbCategoria.addItem(categoria);
@@ -71,6 +72,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     private DefaultListModel<Usuario> listaParticipantes = new DefaultListModel<>();
     private DefaultListModel<Usuario> listaUsuarios = new DefaultListModel();
     private boolean fechar;
+    private FramesController controller;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -415,25 +417,22 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
             grupoComunitario.setPrazoValidade(prazo);
 
             try {
-                Dao<Participante> daoParticipante = Factoring.getDaoParticipante();
-                Dao<GrupoComunitario> daoGrupoComunitario = Factoring.getDaoGrupoComunitario();
 
                 while (!listaParticipantes.isEmpty()) {
                     participante = new Participante();
                     participante.setUsuario(listaParticipantes.firstElement());
-                    daoParticipante.grava(participante);
+                    controller.grava(participante);
                     grupoComunitario.addParticipante(participante);
 
                     listaParticipantes.removeElement(participante.getUsuario());
                 }
-                daoGrupoComunitario.grava(grupoComunitario);
+                controller.grava(grupoComunitario);
 
                 tfDiasNotificacao.setText(null);
                 tfDiasVencimento.setText(null);
                 tfQuantidade.setText(null);
                 tfValor.setText(null);
 
-                ConcreteSubject.getInstancia().notifyObservers(grupoComunitario);
                 this.iniListaUsuario();
 
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
@@ -526,10 +525,8 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     }
 
     private void iniListaUsuario() {
-        Dao<Usuario> daoUsu;
         try {
-            daoUsu = Factoring.getDaoUsuario();
-            List<Usuario> usuarios = daoUsu.busca();
+            List<Usuario> usuarios = controller.buscaUsuario();
             listaUsuarios.removeAllElements();
             for (Usuario usuario : usuarios) {
                 listaUsuarios.addElement(usuario);
