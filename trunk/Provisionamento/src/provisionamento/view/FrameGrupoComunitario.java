@@ -10,10 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import provisionamento.controller.FramesController;
-import provisionamento.model.Categoria;
-import provisionamento.model.GrupoComunitario;
-import provisionamento.model.Participante;
-import provisionamento.model.Usuario;
+import provisionamento.model.*;
 
 /**
  *
@@ -46,8 +43,11 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
         ConcreteSubject.getInstancia().registerObserver(this);
     }
 
-    public FrameGrupoComunitario(GrupoComunitario grupoComunitario) {
+    public FrameGrupoComunitario(Mensagem mensagem) {
         initComponents();
+        controller = new FramesController();
+        this.mensagemFonte = mensagem;
+        GrupoComunitario grupoComunitario = (GrupoComunitario) mensagem.getGrupo();
         cbCategoria.removeAllItems();
         cbCategoria.addItem(grupoComunitario.getCategoria());
         cbCategoria.setEnabled(false);
@@ -73,6 +73,7 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
     private DefaultListModel<Usuario> listaUsuarios = new DefaultListModel();
     private boolean fechar;
     private FramesController controller;
+    private Mensagem mensagemFonte;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -434,7 +435,12 @@ public class FrameGrupoComunitario extends javax.swing.JFrame implements Observe
                 tfValor.setText(null);
 
                 this.iniListaUsuario();
-
+                if(mensagemFonte != null){
+                    mensagemFonte.getGrupo().setFinalizado(true);
+                    controller.notificar(mensagemFonte);
+                    controller.notificar(mensagemFonte.getGrupo());
+                }                    
+            
                 JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
                 if (this.fechar) {
                     ConcreteSubject.getInstancia().removeOberser(this);

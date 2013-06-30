@@ -379,15 +379,15 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     private void btAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtenderActionPerformed
         Mensagem mensagem = (Mensagem) lsNotificacoes.getSelectedValue();
         if (mensagem.getGrupo() instanceof GrupoComunitario) {
-            frameGrupoComunitario = new FrameGrupoComunitario((GrupoComunitario) mensagem.getGrupo());
+            frameGrupoComunitario = new FrameGrupoComunitario(mensagem);
             frameGrupoComunitario.setVisible(true);
         } else {
-            frameGrupo = new FrameGrupoUnitario(mensagem.getGrupo());
+            frameGrupo = new FrameGrupoUnitario(mensagem);
             frameGrupo.setVisible(true);
         }
-        mensagem.getGrupo().setFinalizado(true);
+        /*mensagem.getGrupo().setFinalizado(true);
         ConcreteSubject.getInstancia().notifyObservers(mensagem.getGrupo());
-        listaMensagens.removeElement(mensagem);
+        listaMensagens.removeElement(mensagem);*/
     }//GEN-LAST:event_btAtenderActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
@@ -425,7 +425,6 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_btBrowseReportActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         String extensao;
         String nomeArqu;
 
@@ -558,6 +557,9 @@ public class FramePrincipal extends javax.swing.JFrame implements Observer {
             } else {
                 modelGruposPessoais.removeElement(grupoUnitario);
             }
+        } else if(obj instanceof Mensagem){
+            Mensagem mensagem = (Mensagem) obj;
+            listaMensagens.removeElement(mensagem);
         }
     }
 }

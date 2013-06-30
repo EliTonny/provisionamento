@@ -6,7 +6,7 @@ import DaoArquivo.ModeloBase;
  *
  * @author Eli T. de Souza
  */
-public class Mensagem {
+public class Mensagem{
     private String mensagem;
     private GrupoUnitario grupo;
     
@@ -26,5 +26,16 @@ public class Mensagem {
     @Override
     public String toString(){
         return this.mensagem;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        Mensagem msg; 
+        if(obj instanceof Mensagem){
+            msg = (Mensagem) obj;
+            if(this.getMensagem().equals(msg.getMensagem()))
+                return true;
+        }
+        return false;
     }
 }
