@@ -1,6 +1,5 @@
 package Sistema;
 
-
 import MyExceptions.DaoException;
 import java.util.List;
 

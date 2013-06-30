@@ -3,7 +3,6 @@ package DaoArquivo;
 import MyExceptions.DaoException;
 import MyExceptions.GravaDadosException;
 import Sistema.Dao;
-import java.util.Iterator;
 import provisionamento.model.GrupoComunitario;
 import provisionamento.model.Participante;
 import provisionamento.model.Usuario;
